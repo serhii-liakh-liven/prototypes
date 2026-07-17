@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Get Unstuck">
 <meta name="application-name" content="Get Unstuck">
+<script>/* app-only mode: set class before paint so the presentation never flashes */if(/[?&]app\b/.test(location.search))document.documentElement.className+='app-mode';</script>
 <style>
   /* Deliberately single-theme: the page commits to Liven's light gradient look. */
   :root{
@@ -436,6 +437,32 @@
   @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){ .screen{animation:none} }
 
+  /* ============ APP-ONLY MODE (?app) — just the prototype, no presentation ============ */
+  .app-chrome{display:none}
+  html.app-mode .topnav{display:none}
+  html.app-mode .wrap>.sec:not(#prototype){display:none}
+  html.app-mode footer,html.app-mode .llm-cta{display:none}
+  html.app-mode .wrap{max-width:none;padding:0}
+  html.app-mode #prototype{padding:0!important;margin:0}
+  html.app-mode #prototype .kicker,html.app-mode #prototype .sec-h,html.app-mode #prototype .proto-note{display:none}   /* hide the "live prototype" heading, keep the phone */
+  html.app-mode .proto-wrap{position:fixed;inset:0;padding:0;display:flex;align-items:stretch;justify-content:center;background:var(--grad)}
+  html.app-mode .phone{width:min(430px,100%);height:100%;border-radius:0;border:none;box-shadow:none}
+  @media (min-width:560px){
+    html.app-mode .proto-wrap{align-items:center;padding:22px}
+    html.app-mode .phone{height:min(880px,100%);border-radius:42px;box-shadow:var(--shadow);border:1px solid rgba(31,38,46,.06)}
+  }
+  html.app-mode .app-scroll{padding-top:40px}   /* clear the floating chrome so it never overlaps the app's top content */
+  html.app-mode .app-chrome{display:flex;position:fixed;top:0;right:0;z-index:60;align-items:center;gap:6px;padding:calc(8px + env(safe-area-inset-top)) 10px 8px 8px}
+  .app-chrome .langtog{display:inline-flex;gap:2px;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);border-radius:999px;padding:3px;box-shadow:0 2px 8px rgba(31,38,46,.14)}
+  .app-chrome .langtog button{font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--ink-3);padding:4px 9px;border-radius:999px}
+  .app-chrome .langtog button.on{background:var(--accent);color:#fff}
+  .app-chrome .ac-btn{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);box-shadow:0 2px 8px rgba(31,38,46,.14);color:var(--ink-2);font-size:14px;font-weight:800;cursor:pointer;text-decoration:none}
+  .app-chrome .ac-btn:hover{color:var(--purple)}
+  .app-launch{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#fff;background:var(--purple);border:none;border-radius:999px;padding:9px 15px;cursor:pointer;text-decoration:none;box-shadow:0 6px 16px rgba(124,92,240,.28)}
+  .app-launch:hover{filter:brightness(1.06)}
+  .app-launch::after{content:"↗"}
+  .topnav a.applink{color:var(--purple);font-weight:800}
+
   .tabbar{display:flex;border-top:1px solid var(--line);background:#fff;padding:8px 6px calc(10px + env(safe-area-inset-bottom));flex-shrink:0}
   .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--ink-3);padding:4px 0;border-radius:10px}
   .tabbar button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -589,10 +616,18 @@
   <a href="#mvp" data-i18n="nav.mvp">MVP</a>
   <a href="#modes" data-i18n="nav.modes">Two modes</a>
   <a href="#demos" data-i18n="nav.demos">Demos</a>
+  <a href="?app" class="applink" data-i18n="nav.app">Open the app ↗</a>
   <span class="langtog"><button id="lang-en" onclick="setLang('en')">EN</button><button id="lang-uk" onclick="setLang('uk')">УКР</button></span>
   <button id="installbtn" class="installbtn" style="display:none" onclick="pwaInstall()" data-i18n="nav.install">Install app</button>
   <a href="#prototype" class="cta" data-i18n="nav.try">Try the prototype</a>
 </nav>
+
+<!-- floating chrome shown ONLY in app-only mode (?app) -->
+<div class="app-chrome">
+  <span class="langtog"><button id="app-lang-en" onclick="setLang('en')">EN</button><button id="app-lang-uk" onclick="setLang('uk')">УКР</button></span>
+  <button class="ac-btn" id="app-install" style="display:none" onclick="pwaInstall()" title="Install app" aria-label="Install app">⬇</button>
+  <a class="ac-btn" href="./" title="About / presentation" aria-label="About / presentation">ⓘ</a>
+</div>
 
 <div class="wrap">
 
@@ -608,6 +643,7 @@
       <span class="node" data-i18n="loop.learn">LEARN</span><span class="arr" style="animation:none">↻</span>
     </div>
     <div class="row-cta">
+      <a class="app-launch" href="?app" data-i18n="hero.appcta">Open the app</a>
       <a class="pbtn" href="#prototype" data-i18n="hero.cta1">Try the live prototype</a>
       <a class="pbtn ghost" href="#story" data-i18n="hero.cta2">Read the reasoning ↓</a>
     </div>
@@ -1306,6 +1342,8 @@ const DICT = {
     uk:'<b>Легше зараз. Краще функціонувати з часом.</b> Самопізнання лишається в продукті — але як <i>механізм</i>, а не те, що ми продаємо. Ми продаємо вихід зі стану «я застряг»: відкрий застосунок у складний момент — і менш ніж за хвилину зрозумієш, що відбувається, і отримаєш одну маленьку дію, що працює.'},
   'loop.understand':{en:'UNDERSTAND', uk:'ЗРОЗУМІТИ'}, 'loop.act':{en:'ACT', uk:'ДІЯ'}, 'loop.check':{en:'CHECK', uk:'ПЕРЕВІРКА'}, 'loop.learn':{en:'LEARN', uk:'НАВЧАННЯ'},
   'hero.cta1':{en:'Try the live prototype', uk:'Спробувати живий прототип'}, 'hero.cta2':{en:'Read the reasoning ↓', uk:'Читати логіку ↓'},
+  'hero.appcta':{en:'Open the app', uk:'Відкрити застосунок'},
+  'nav.app':{en:'Open the app ↗', uk:'Відкрити застосунок ↗'},
 
   'story.kicker':{en:'The chain of thought', uk:'Ланцюжок думок'},
   'story.h':{en:'How we got here — six steps', uk:'Як ми до цього дійшли — шість кроків'},
@@ -1753,9 +1791,8 @@ function applyLang(){
     if(v!==undefined) el.innerHTML=v;
   });
   document.documentElement.lang = LANG;
-  const en=document.getElementById('lang-en'), uk=document.getElementById('lang-uk');
-  if(en) en.classList.toggle('on', LANG==='en');
-  if(uk) uk.classList.toggle('on', LANG==='uk');
+  ['lang-en','app-lang-en'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.toggle('on', LANG==='en'); });
+  ['lang-uk','app-lang-uk'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.toggle('on', LANG==='uk'); });
 }
 function setLang(l){
   LANG=l; try{ localStorage.setItem('liven-lang', l); }catch(e){}
@@ -1839,7 +1876,9 @@ const PWA_ICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' v
   try{
     var ti=document.createElement('link'); ti.rel='apple-touch-icon'; ti.href=PWA_ICON; document.head.appendChild(ti);
     var fi=document.createElement('link'); fi.rel='icon'; fi.type='image/svg+xml'; fi.href=PWA_ICON; document.head.appendChild(fi);
-    var manifest={ name:'Liven · Get Unstuck', short_name:'Get Unstuck', start_url:'.', scope:'.', display:'standalone', orientation:'portrait', background_color:'#EDF5D9', theme_color:'#5FB93D',
+    var appdir; try{ appdir=new URL('.', location.href).href; }catch(e){ appdir=location.href.split('?')[0]; }
+    /* installed app opens straight into app-only mode (?app) — no presentation */
+    var manifest={ name:'Liven · Get Unstuck', short_name:'Get Unstuck', id:appdir+'?app', start_url:appdir+'?app', scope:appdir, display:'standalone', orientation:'portrait', background_color:'#EDF5D9', theme_color:'#5FB93D',
       icons:[{src:PWA_ICON,sizes:'512x512',type:'image/svg+xml',purpose:'any'},{src:PWA_ICON,sizes:'192x192',type:'image/svg+xml',purpose:'maskable'}] };
     var ml=document.createElement('link'); ml.rel='manifest';
     ml.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'}));
@@ -1851,8 +1890,9 @@ function isStandalone(){ try{ return window.matchMedia('(display-mode: standalon
 function isIOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1); }
 function canServeInstall(){ return location.protocol==='https:' || location.protocol==='http:'; }
 function refreshInstallBtn(){
-  var b=document.getElementById('installbtn'); if(!b) return;
-  b.style.display = (canServeInstall() && !isStandalone() && !IN_ARTIFACT) ? 'inline-flex' : 'none';
+  var show = (canServeInstall() && !isStandalone() && !IN_ARTIFACT);
+  var b=document.getElementById('installbtn'); if(b) b.style.display = show ? 'inline-flex' : 'none';
+  var a=document.getElementById('app-install'); if(a) a.style.display = show ? 'flex' : 'none';
 }
 window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); __deferredPrompt=e; refreshInstallBtn(); });
 window.addEventListener('appinstalled', function(){ __deferredPrompt=null; refreshInstallBtn(); try{toast(tt('Installed — check your home screen','Встановлено — глянь на робочому столі'));}catch(e){} });

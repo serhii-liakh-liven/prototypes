@@ -22,12 +22,14 @@
   h1{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.1;margin:10px 0 8px;text-wrap:balance}
   .lede{font-size:16px;line-height:1.6;color:var(--ink-2);max-width:560px;margin:0 0 34px}
   .grid{display:grid;gap:14px}
-  a.card{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:0 6px 20px rgba(31,38,46,.05);transition:transform .15s,box-shadow .15s}
-  a.card:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(31,38,46,.12)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:0 6px 20px rgba(31,38,46,.05)}
   .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--purple);background:var(--purple-soft);border-radius:999px;padding:4px 10px;margin-bottom:10px}
   .card h2{font-family:var(--display);font-weight:800;font-size:20px;margin:0 0 4px}
-  .card p{font-size:14px;line-height:1.55;color:var(--ink-2);margin:0 0 8px}
-  .go{font-size:13px;font-weight:800;color:var(--accent)}
+  .card p{font-size:14px;line-height:1.55;color:var(--ink-2);margin:0 0 14px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px}
+  .go{font-size:13px;font-weight:800;color:var(--accent);text-decoration:none;padding:9px 15px;border-radius:999px;background:var(--surface-3,#F0F3F1);transition:transform .12s}
+  .go:hover{transform:translateY(-1px)}
+  .go.primary{color:#fff;background:var(--purple);box-shadow:0 6px 16px rgba(124,92,240,.25)}
   footer{margin-top:40px;font-size:12.5px;color:var(--ink-3);line-height:1.6}
 </style>
 </head>
@@ -37,14 +39,17 @@
     <h1>Prototype library</h1>
     <p class="lede">Клікабельні концепт-прототипи. Кожен відкривається як окремий застосунок — на телефоні можна встановити на робочий стіл. / Clickable concept prototypes; each installs to your phone.</p>
     <div class="grid">
-      <a class="card" href="./get-unstuck/">
+      <div class="card">
         <span class="tag">Concept · EN / UK</span>
         <h2>Liven · Get Unstuck</h2>
         <p>Rescue-flow prototype: understand your own words in the moment → one small move. Competitor map, hypothesis, voice input, installable.</p>
-        <span class="go">Відкрити →</span>
-      </a>
+        <div class="actions">
+          <a class="go primary" href="./get-unstuck/?app">Застосунок / App ↗</a>
+          <a class="go" href="./get-unstuck/">Презентація / Deck →</a>
+        </div>
+      </div>
     </div>
-    <footer>Приватний репозиторій · сторінки не індексуються (noindex) · доступ лише за посиланням.</footer>
+    <footer>Не індексується (noindex) · відкрито лише за посиланням. «Застосунок» — чистий прототип для встановлення на телефон; «Презентація» — з описом гіпотези.</footer>
   </div>
 </body>
 </html>
