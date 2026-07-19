@@ -67,6 +67,17 @@
   .topnav .installbtn::before{content:"⬇";font-size:12px}
   .verbadge{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--ink-3);background:var(--surface-3);border-radius:999px;padding:2px 7px;vertical-align:middle}
   .verbadge.ac{background:rgba(255,255,255,.82);backdrop-filter:blur(6px);box-shadow:0 2px 8px rgba(31,38,46,.14);align-self:center}
+  /* v2: personalized plan + editable mirror + memory control */
+  .tune-pill{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:none;color:var(--purple);background:var(--purple-soft);border-radius:999px;padding:2px 8px;vertical-align:middle;margin-left:6px}
+  .w-hist{font-size:11.5px;font-weight:700;color:var(--accent);margin-top:5px}
+  .mirror-edit{margin-top:10px;font-size:12.5px;font-weight:700;color:var(--purple);background:none;border:none;cursor:pointer;padding:4px 0;text-align:left}
+  .mirror-editor-box{margin-top:8px;padding:12px 13px;background:var(--purple-soft);border-radius:13px}
+  .mirror-editor-box p{font-size:12.5px;color:var(--ink-2);margin:0 0 9px;line-height:1.45}
+  .mem-forget{font-size:11px;font-weight:700;color:var(--ink-3);background:none;border:none;cursor:pointer;padding:2px 4px}
+  .mem-forget:hover{color:var(--bad)}
+  .deeper-card{background:linear-gradient(140deg,var(--purple-soft),var(--accent-soft));border-radius:16px;padding:15px 17px;margin-bottom:14px}
+  .deeper-card h4{margin:0 0 5px}
+  .deeper-card .why{font-size:13px;color:var(--ink-2);line-height:1.5;margin:0 0 11px}
   /* voice dictation on the entry screen */
   .ta-wrap{position:relative}
   .ta-wrap textarea{padding-right:46px}
@@ -607,7 +618,7 @@
 </style>
 
 <nav class="topnav">
-  <span class="logo">Liven <b>· Get Unstuck</b> <span class="verbadge">v1</span></span>
+  <span class="logo">Liven <b>· Get Unstuck</b> <span class="verbadge">v2</span></span>
   <a href="#story" data-i18n="nav.reasoning">Reasoning</a>
   <a href="#jtbd" data-i18n="nav.jtbd">JTBD</a>
   <a href="#compare" data-i18n="nav.compare">Now vs This</a>
@@ -626,7 +637,7 @@
 
 <!-- floating chrome shown ONLY in app-only mode (?app) -->
 <div class="app-chrome">
-  <span class="verbadge ac">v1</span>
+  <span class="verbadge ac">v2</span>
   <span class="langtog"><button id="app-lang-en" onclick="setLang('en')">EN</button><button id="app-lang-uk" onclick="setLang('uk')">УКР</button></span>
   <button class="ac-btn" id="app-install" style="display:none" onclick="pwaInstall()" title="Install app" aria-label="Install app">⬇</button>
   <a class="ac-btn" href="./" title="About / presentation" aria-label="About / presentation">ⓘ</a>
@@ -1945,6 +1956,73 @@ function daypart(ts){ const h=new Date(ts).getHours(); return h<5?'night':h<12?'
 function todaysCheckin(){ return DB.checkins.find(c=>todayKey(c.ts)===todayKey()); }
 const isWin = s=>s.helped==='much'||s.helped==='bit'||s.clearer;
 
+/* ===== v2: the compounding model of you — helpers ===== */
+/* success of one intervention for one barrier, from history */
+function ivHistFor(barrier, ivId){
+  let t=0,w=0;
+  DB.sessions.forEach(s=>{ if(s.barrier===barrier && s.intervention===ivId){ t++; if(isWin(s)) w++; } });
+  return {t,w};
+}
+/* interventions ranked by this user's win-rate for a barrier (min 2 samples) */
+function reliableForBarrier(barrier){
+  const m={};
+  DB.sessions.forEach(s=>{ if(s.barrier!==barrier||!s.intervention) return; m[s.intervention]=m[s.intervention]||{t:0,w:0}; m[s.intervention].t++; if(isWin(s))m[s.intervention].w++; });
+  return Object.entries(m).filter(([,v])=>v.t>=2).sort((a,b)=>b[1].w/b[1].t-a[1].w/a[1].t);
+}
+/* overall reliable moves across all barriers (min 2 samples) */
+function reliableMoves(){
+  const m={};
+  DB.sessions.forEach(s=>{ if(!s.intervention) return; m[s.intervention]=m[s.intervention]||{t:0,w:0}; m[s.intervention].t++; if(isWin(s))m[s.intervention].w++; });
+  return Object.entries(m).filter(([,v])=>v.t>=2).map(([k,v])=>({id:k,t:v.t,w:v.w,rate:v.w/v.t})).sort((a,b)=>b.rate-a.rate);
+}
+/* a recurring barrier worth a deeper look: repeated enough recently */
+function recurringPattern(){
+  const recent = DB.sessions.filter(s=>Date.now()-s.ts<28*DAY && s.barrier);
+  if(recent.length<6) return null;
+  const c={}; recent.forEach(s=>c[s.barrier]=(c[s.barrier]||0)+1);
+  const top = Object.entries(c).sort((a,b)=>b[1]-a[1])[0];
+  if(!top || top[1]<4) return null;
+  const patternFlagged = recent.filter(s=>s.barrier===top[0] && s.scale==='pattern').length;
+  return {barrier:top[0], count:top[1], patternFlagged};
+}
+/* order a plan so the user's most reliable tool for this barrier leads */
+function personalizePlan(plan, barrier){
+  const rank = reliableForBarrier(barrier);
+  if(!rank.length) return {plan, personalized:false};
+  const order = {}; rank.forEach(([id],i)=>order[id]=i);
+  const sorted = plan.slice().sort((a,b)=>{
+    const ai=order[a.intervention], bi=order[b.intervention];
+    if(ai===undefined && bi===undefined) return 0;
+    if(ai===undefined) return 1; if(bi===undefined) return -1; return ai-bi;
+  });
+  const changed = sorted.some((p,i)=>p.intervention!==plan[i].intervention);
+  return {plan:sorted, personalized:changed};
+}
+/* editable mirror (B5): re-tag the primary layer → re-derive barrier + plan */
+const KIND2IV = {task:'firstStep', belief:'thoughtCheck', rumination:'sortThoughts', body:'breathing', energy:'energyMatch', other:'brainDump'};
+const LAYER_KINDS = ['task','belief','rumination','body','energy'];
+function layerKindLabel(k){
+  return LANG==='uk'
+    ? ({task:'задача',belief:'самоцінність / страх',rumination:'руминація',body:'тіло',energy:'енергія',other:'інше'}[k]||k)
+    : ({task:'a task',belief:'self-worth / fear',rumination:'rumination',body:'the body',energy:'energy',other:'other'}[k]||k);
+}
+function toggleMirrorEdit(){ const e=document.getElementById('mirror-editor'); if(e) e.style.display = (e.style.display==='none'||!e.style.display)?'block':'none'; }
+function adjustPrimaryLayer(kind){
+  const u=flow.u; let layers=u.layers.slice();
+  const idx=layers.findIndex(l=>l.kind===kind);
+  if(idx>0){ const l=layers.splice(idx,1)[0]; layers.unshift(l); }
+  else if(idx<0){ layers.unshift({kind, quote:'', note: tt('you told me this is the main thing right now','ти сказав, що це зараз головне')}); }
+  u.layers=layers;
+  flow.barrier = LAYER2BARRIER[kind] || flow.barrier;
+  flow.edited = true;
+  const lead = {intervention: KIND2IV[kind]||'brainDump', why: tt('Chosen because you said this is the core.','Обрано, бо ти сказав, що це головне.')};
+  let base=[lead]; (u.plan||[]).forEach(p=>{ if(p.intervention!==lead.intervention && base.length<3) base.push(p); });
+  const pz=personalizePlan(base, flow.barrier); flow.plan=pz.plan; flow.personalized=pz.personalized;
+  flow.stepIdx=0;
+  renderReflection();
+  toast(tt('Updated to your correction — the model learns from this','Оновив під твою правку — модель це вчить'));
+}
+
 /* =====================================================================
    INTERVENTION LIBRARY
 ===================================================================== */
@@ -2405,6 +2483,8 @@ function afterUnderstand(){
   flow.barrier = LAYER2BARRIER[(u.layers[0]||{}).kind] || 'fog';
   if(u.crisis){ renderCrisis(); return; }
   flow.plan = u.plan.length ? u.plan.slice(0,3) : [{intervention:'brainDump', why:''}];
+  const pz = personalizePlan(flow.plan, flow.barrier);   // v2: lead with what works for YOU
+  flow.plan = pz.plan; flow.personalized = pz.personalized;
   flow.stepIdx = 0;
   renderReflection();
 }
@@ -2446,13 +2526,22 @@ function renderReflection(){
     ${u.layers.length ? `<div class="card">
       <h4>${tt('The layers underneath','Шари під цим')}</h4>
       ${u.layers.map(l=>`<div class="layer"><span class="k k-${l.kind}">${l.kind}</span><span>${l.quote?`<i style="color:var(--ink-3)">“${esc(l.quote)}”</i> — `:''}${esc(l.note)}</span></div>`).join('')}
+      <button class="mirror-edit" onclick="toggleMirrorEdit()">${tt("🤔 Not quite me? Adjust","🤔 Не зовсім про мене? Уточнити")}</button>
+      <div id="mirror-editor" class="mirror-editor-box" style="display:none">
+        <p>${tt("What's the main thing right now? Tap it — I'll re-read and re-plan.",'Що зараз головне? Тапни — я перечитаю й перепланую.')}</p>
+        <div class="chips">${LAYER_KINDS.map(k=>`<button class="chip ${(u.layers[0]||{}).kind===k?'picked':''}" onclick="adjustPrimaryLayer('${k}')">${layerKindLabel(k)}</button>`).join('')}</div>
+      </div>
     </div>`:''}
     <div class="card ${u.scale==='pattern'?'amber':'accent'}">
       <h4>${u.scale==='pattern'?tt('Honest scale: this is a pattern','Чесний масштаб: це патерн'):tt('Honest scale: this is a moment','Чесний масштаб: це момент')}</h4>
       <p>${esc(u.scale_note)}</p>
     </div>
-    <h4 style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:18px 0 10px">${tt('The plan','План')} — ${flow.plan.length} ${tt(flow.plan.length>1?'steps':'step', LANG==='uk'?(flow.plan.length>1?'кроки':'крок'):'step')}</h4>
-    ${flow.plan.map((p,i)=>`<div class="plan-step"><div class="n">${i+1}</div><div><div class="t">${ivName(p.intervention)} <span style="font-weight:600;color:var(--ink-3);font-size:12px">· ${INTERVENTIONS[p.intervention].dur}</span></div><div class="w">${esc(p.why)}</div></div></div>`).join('')}
+    <h4 style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:18px 0 10px">${tt('The plan','План')} — ${flow.plan.length} ${tt(flow.plan.length>1?'steps':'step', LANG==='uk'?(flow.plan.length>1?'кроки':'крок'):'step')}${flow.personalized?` <span class="tune-pill">${tt('ordered for you','підібрано під тебе')}</span>`:''}</h4>
+    ${flow.plan.map((p,i)=>{
+      const h=ivHistFor(flow.barrier,p.intervention);
+      const hist = h.t>=2?`<div class="w-hist">✓ ${tt('worked for you '+h.w+'/'+h.t+' times for this','допомагало тобі '+h.w+'/'+h.t+' разів тут')}</div>`:'';
+      return `<div class="plan-step"><div class="n">${i+1}</div><div><div class="t">${ivName(p.intervention)} <span style="font-weight:600;color:var(--ink-3);font-size:12px">· ${INTERVENTIONS[p.intervention].dur}</span></div><div class="w">${esc(p.why)}</div>${hist}</div></div>`;
+    }).join('')}
     <div style="height:10px"></div>
     <button class="btn" onclick="runStep()">${tt('Start','Почати')} — ${ivName(flow.plan[0].intervention)}</button>
     <p class="footer-note">${tt('A hypothesis, not a diagnosis — you know yourself best.','Це гіпотеза, не діагноз — ти знаєш себе найкраще.')}</p>
@@ -3132,6 +3221,13 @@ function renderToday(){
   const todaySessions = DB.sessions.filter(s=>todayKey(s.ts)===todayKey());
   const wins = todaySessions.filter(isWin).length;
   const risk = riskWindow();
+  const rp = recurringPattern();   // v2: surface a repeated pattern for a deeper look
+  const deeperHtml = rp ? `
+    <div class="deeper-card">
+      <h4>${tt('A pattern worth a closer look','Патерн, вартий уваги')}</h4>
+      <p class="why">${tt('“'+barrierName(rp.barrier)+'” has come up <b>'+rp.count+' times</b> this month'+(rp.patternFlagged?' ('+rp.patternFlagged+' flagged as a pattern, not a moment)':'')+'. Quick actions kept it moving — but the pattern itself runs deeper. Want to look at it together?','«'+barrierName(rp.barrier)+'» зʼявлявся <b>'+rp.count+' разів</b> цього місяця'+(rp.patternFlagged?' ('+rp.patternFlagged+' позначено як патерн, не момент)':'')+'. Швидкі дії тримали рух — але сам патерн глибший. Глянемо разом?')}</p>
+      <button class="btn" onclick="openDeeperLook('${rp.barrier}')">${tt('Look at this pattern','Глянути на цей патерн')}</button>
+    </div>` : '';
   const wp = DB.weekPlan;
   const wpHtml = wp && wp.items.length ? `
     <div class="card amber">
@@ -3156,6 +3252,7 @@ function renderToday(){
       <div style="height:16px"></div>
       <button class="btn" onclick="saveCheckin()">${tt('Set me up','Налаштуй мене')}</button>
       ${risk?`<div class="card amber" style="margin-top:16px"><h4>${tt('Your pattern says','Твій патерн каже')}</h4><p>${risk}</p></div>`:''}
+      ${deeperHtml}
       ${wpHtml}
     `;
   } else {
@@ -3166,6 +3263,7 @@ function renderToday(){
       ${ci.hardest?`<div class="card"><h4>${tt('The hard thing','Складна річ')}</h4><p>${esc(ci.hardest)}</p></div>`:''}
       ${ci.intent?`<div class="card accent"><h4>${tt('Your intention','Твій намір')}</h4><p>${esc(ci.intent)}</p></div>`:''}
       ${risk?`<div class="card amber"><h4>${tt('Watch out for','Стережись')}</h4><p>${risk}</p></div>`:''}
+      ${deeperHtml}
       ${wpHtml}
       <div class="card">
         <h4>${tt('Today so far','Сьогодні поки що')}</h4>
@@ -3176,6 +3274,54 @@ function renderToday(){
   }
 }
 function dayPartName(p){ return LANG==='uk' ? ({morning:'зранку',afternoon:'вдень',evening:'ввечері',night:'вночі'}[p]||p) : p; }
+
+/* v2 (A4): deeper look at a recurring pattern — self-discovery surfaced only after repeats */
+function openDeeperLook(barrier){ go('rescue'); renderDeeperLook(barrier); }
+function renderDeeperLook(barrier){
+  const bn = barrierName(barrier);
+  const rel = reliableForBarrier(barrier);
+  const bestTool = rel.length ? ivName(rel[0][0]) : null;
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('Deeper look','Глибший погляд')}</span>
+    <h2 class="big" style="margin-top:10px">${tt('The recurring one: '+bn,'Той, що повторюється: '+bn)}</h2>
+    <p class="sub">${tt("Moments get a 2-minute move. A pattern is different — it's worth naming, not just managing. This is where self-discovery earns its place: only after it kept showing up.","Моменти отримують 2-хвилинний хід. Патерн — інше: його варто назвати, а не лише гасити. Саме тут саморозвиток заслуговує місце — лише після того, як це повторювалось.")}</p>
+    <div class="card"><h4>${tt('One honest question','Одне чесне питання')}</h4>
+      <p>${tt('When “'+bn+'” shows up, what are you really trying to avoid feeling?','Коли зʼявляється «'+bn+'», чого ти насправді намагаєшся не відчувати?')}</p>
+      <textarea id="deeper-note" rows="3" placeholder="${tt('In your own words…','Своїми словами…')}"></textarea>
+    </div>
+    ${bestTool?`<div class="card accent"><h4>${tt('What reliably helps you here','Що надійно допомагає тобі тут')}</h4><p><b>${bestTool}</b> — ${tt('your highest-rate move for this barrier.','твій найрезультативніший хід для цього барʼєра.')}</p></div>`:''}
+    <div style="height:6px"></div>
+    <button class="btn" onclick="deeperToWeekPlan('${barrier}')">${tt('Make a week plan for this','Скласти план на тиждень для цього')}</button>
+    <button class="btn outline" style="margin-top:8px" onclick="deeperToHuman()">${tt('This feels bigger — point me to a person','Це відчувається більшим — підкажи людину')}</button>
+    <p class="footer-note">${tt('Notes stay on your device. Naming a pattern is progress, not failure.','Нотатки лишаються на твоєму пристрої. Назвати патерн — це прогрес, не провал.')}</p>
+  `;
+}
+function deeperToWeekPlan(barrier){
+  const note = ($$('#deeper-note')||{}).value||'';
+  const bn = barrierName(barrier);
+  const rel = reliableForBarrier(barrier);
+  const best = rel.length ? ivName(rel[0][0]) : null;
+  const items = [
+    {day_hint: tt('This week','Цього тижня'), action: tt('Notice one early sign that “'+bn+'” is starting — name it out loud.','Помічай одну ранню ознаку, що починається «'+bn+'» — назви її вголос.')},
+    {day_hint: tt('When it starts','Коли починається'), action: best?tt('Reach for '+best+' early — it is your highest-rate move here.','Берися за '+best+' раніше — це твій найрезультативніший хід тут.'):tt('Do one 2-minute move before it builds.','Зроби один 2-хвилинний хід, поки не наросло.')},
+    {day_hint: tt('Once this week','Раз на тиждень'), action: tt('Open Insights: when does it hit, and what actually helped.','Відкрий Інсайти: коли воно бʼє і що реально допомогло.')}
+  ];
+  DB.weekPlan = {ts:Date.now(), items, note, barrier};
+  saveDB();
+  toast(tt('Week plan saved to Today','План на тиждень збережено в «Сьогодні»'));
+  go('today');
+}
+function deeperToHuman(){
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('Honest handoff','Чесна передача')}</span>
+    <h2 class="big" style="margin-top:10px">${tt('Some patterns are for a person, not an app.','Деякі патерни — для людини, не застосунку.')}</h2>
+    <div class="card"><p>${tt("If this keeps returning and weighs on you, talking it through with someone — a friend, or a therapist — will do more than any exercise. That's not the app failing; it's the app being honest about its limits.","Якщо це постійно повертається й тисне, проговорити це з кимось — другом чи терапевтом — дасть більше, ніж будь-яка вправа. Це не провал застосунку; це його чесність щодо своїх меж.")}</p></div>
+    <div class="card"><h4>${tt('In Ukraine','В Україні')}</h4><p>${tt('Lifeline Ukraine — call','Lifeline Ukraine — телефонуй')} <b>7333</b>, ${tt('free, 24/7. Elsewhere: your local line or a therapist.','безкоштовно, 24/7. В інших країнах — місцева лінія чи терапевт.')}</p></div>
+    <button class="btn outline" onclick="renderRescueHome()">${tt('Back','Назад')}</button>
+  `;
+}
 function wpToggle(i){ DB.weekPlan.items[i].done = !DB.weekPlan.items[i].done; saveDB(); renderToday(); }
 let ciEnergyVal=null;
 function ciEnergy(btn,v){
@@ -3311,8 +3457,9 @@ function renderYou(){
   });
   const rows = Object.entries(bStats).sort((a,b)=>b[1].t-a[1].t).map(([b,v])=>{
     const best = Object.entries(v.best).filter(([,s])=>s.t>=2).sort((a,c)=>c[1].w/c[1].t-a[1].w/a[1].t)[0];
-    return {barrier:barrierName(b), t:v.t, tool: best?`${ivName(best[0])} (${Math.round(best[1].w/best[1].t*100)}%)`:tt('still learning','ще вчиться')};
+    return {id:b, barrier:barrierName(b), t:v.t, tool: best?`${ivName(best[0])} (${Math.round(best[1].w/best[1].t*100)}%)`:tt('still learning','ще вчиться')};
   });
+  const moves = reliableMoves();   // v2: overall reliable moves ranking
   scr.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
       <p class="eyebrow" style="margin:0">${tt('Liven · You','Liven · Ти')}</p>
@@ -3324,8 +3471,14 @@ function renderYou(){
       ? `<div class="card"><p>${tt('Nothing yet. Run a Rescue session or load the sample history to see the model form.','Поки нічого. Проведи сесію Порятунку або завантаж демо-історію, щоб побачити, як формується модель.')}</p></div>`
       : `<div class="card">
           <h4>${tt('Barriers seen · your best tool for each','Побачені барʼєри · твій найкращий інструмент для кожного')}</h4>
-          ${rows.map(r=>`<div class="model-row"><span>${r.barrier} <span style="color:var(--ink-3)">×${r.t}</span></span><b style="font-size:13px;color:var(--accent)">${r.tool}</b></div>`).join('')}
+          ${rows.map(r=>`<div class="model-row"><span>${r.barrier} <span style="color:var(--ink-3)">×${r.t}</span></span><span style="display:flex;align-items:center;gap:10px"><b style="font-size:13px;color:var(--accent)">${r.tool}</b><button class="mem-forget" onclick="forgetBarrier('${r.id}')" title="${tt('Forget this','Забути це')}">✕</button></span></div>`).join('')}
+          <p style="font-size:11px;color:var(--ink-3);margin:10px 0 0">${tt("You control this memory — tap ✕ to make Liven forget a barrier's history.",'Ти керуєш цією памʼяттю — тапни ✕, щоб Liven забув історію барʼєра.')}</p>
         </div>
+        ${moves.length?`<div class="card">
+          <h4>${tt('Your reliable moves','Твої надійні ходи')}</h4>
+          <p style="font-size:12px;margin-bottom:10px">${tt('Across everything — ranked by how often they actually helped you.','Загалом — за тим, як часто вони реально тобі допомагали.')}</p>
+          ${moves.slice(0,5).map(m=>`<div class="model-row"><span>${ivName(m.id)}</span><b style="color:var(--accent)">${Math.round(m.rate*100)}% · ${m.w}/${m.t}</b></div>`).join('')}
+        </div>`:''}
         <div class="card">
           <h4>${tt('Totals','Підсумки')}</h4>
           <div class="model-row"><span>${tt('Sessions logged','Записано сесій')}</span><b>${all.length}</b></div>
@@ -3433,6 +3586,20 @@ function keyDrop(ev){
   applyKey(dt.getData('text'));
 }
 function showIntroAgain(){ $$('#intro').style.display='flex'; }
+function forgetBarrier(barrier){
+  const n = DB.sessions.filter(s=>s.barrier===barrier).length;
+  if(!n) return;
+  showModal(`
+    <h3>${tt('Forget this?','Забути це?')}</h3>
+    <p>${tt('Liven will drop the '+n+' session'+(n>1?'s':'')+' behind “'+barrierName(barrier)+'”, and the model updates immediately. This can\'t be undone.','Liven відкине '+n+' '+(n>1?'сесій':'сесію')+' за «'+barrierName(barrier)+'», і модель оновиться одразу. Це не можна скасувати.')}</p>
+    <button class="pbtn" style="background:var(--bad)" onclick="doForgetBarrier('${barrier}')">${tt('Forget it','Забути')}</button>
+    <button class="pbtn" style="background:var(--surface-3);color:var(--ink);margin-top:8px" onclick="closeModal()">${tt('Keep it','Лишити')}</button>
+  `);
+}
+function doForgetBarrier(barrier){
+  DB.sessions = DB.sessions.filter(s=>s.barrier!==barrier);
+  saveDB(); closeModal(); toast(tt('Forgotten — model updated','Забуто — модель оновлено')); renderYou();
+}
 function clearAll(){
   DB.sessions=[]; DB.checkins=[]; DB.weekPlan=null; saveDB();
   toast(tt('Sessions & plans cleared','Сесії та плани очищено')); renderYou();

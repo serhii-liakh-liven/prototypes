@@ -24,6 +24,7 @@
   .grid{display:grid;gap:14px}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 24px;box-shadow:0 6px 20px rgba(31,38,46,.05)}
   .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--purple);background:var(--purple-soft);border-radius:999px;padding:4px 10px;margin-bottom:10px}
+  .tag.v2{color:var(--accent);background:var(--accent-soft)}
   .card h2{font-family:var(--display);font-weight:800;font-size:20px;margin:0 0 4px}
   .card p{font-size:14px;line-height:1.55;color:var(--ink-2);margin:0 0 14px}
   .actions{display:flex;flex-wrap:wrap;gap:10px}
@@ -40,12 +41,21 @@
     <p class="lede">Клікабельні концепт-прототипи. Кожен відкривається як окремий застосунок — на телефоні можна встановити на робочий стіл. / Clickable concept prototypes; each installs to your phone.</p>
     <div class="grid">
       <div class="card">
-        <span class="tag">Concept · EN / UK</span>
+        <span class="tag">v1 · поточна демо</span>
         <h2>Liven · Get Unstuck</h2>
         <p>Rescue-flow prototype: understand your own words in the moment → one small move. Competitor map, hypothesis, voice input, installable.</p>
         <div class="actions">
           <a class="go primary" href="./get-unstuck/?app">Застосунок / App ↗</a>
           <a class="go" href="./get-unstuck/">Презентація / Deck →</a>
+        </div>
+      </div>
+      <div class="card">
+        <span class="tag v2">v2 · + модель тебе</span>
+        <h2>Liven · Get Unstuck <span style="color:var(--purple)">v2</span></h2>
+        <p>Усе з v1 + компаундна «модель тебе»: план підбирається під тебе («допомагало 6/6»), дзеркало можна виправити, повторювані патерни виводяться в глибший погляд, і ти керуєш памʼяттю. / All of v1 + the compounding model of you.</p>
+        <div class="actions">
+          <a class="go primary" href="./get-unstuck-v2/?app">Застосунок / App ↗</a>
+          <a class="go" href="./get-unstuck-v2/">Презентація / Deck →</a>
         </div>
       </div>
     </div>
