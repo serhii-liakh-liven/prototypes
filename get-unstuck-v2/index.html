@@ -664,6 +664,23 @@
   </section>
 
   <!-- ================= REASONING CHAIN ================= -->
+  <!-- ================= WHAT V2 ADDS ================= -->
+  <section class="sec" id="v2new">
+    <p class="kicker" data-i18n="v2n.kicker">This build · v2</p>
+    <h2 class="sec-h" data-i18n="v2n.h">What v2 adds: the model starts <em>leading</em></h2>
+    <p class="lede" data-i18n="v2n.lede">v1 proved the loop (understand → act → check → learn). v2 makes the accumulated model visible and puts it to work — reactive rescue becomes a predictive companion. Load the sample history in the You tab to see all of it live.</p>
+    <div class="capps reveal">
+      <div class="capp"><div class="kind" data-i18n="v2n.k1">Model in action</div><h5 data-i18n="v2n.t1">Plan ordered for you</h5><p data-i18n="v2n.p1">The engine leads with your proven move and shows its work: “worked for you 6/6 times here”.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k2">Shared understanding</div><h5 data-i18n="v2n.t2">Editable mirror</h5><p data-i18n="v2n.p2">“Not quite me? Adjust” — re-tag the core layer and the engine re-reads and re-plans. Your correction feeds the model.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k3">Asks, doesn't guess</div><h5 data-i18n="v2n.t3">One clarifying question</h5><p data-i18n="v2n.p3">When the input is ambiguous, the engine asks one warm question before mirroring — a wrong mirror costs trust.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k4">Reactive → predictive</div><h5 data-i18n="v2n.t4">Risk-window pre-empt</h5><p data-i18n="v2n.p4">The model knows when you usually get stuck — and offers a 2-minute pre-empt before the window, not a rescue after.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k5">Closing the loop in time</div><h5 data-i18n="v2n.t5">Delayed “did it hold?”</h5><p data-i18n="v2n.p5">Hours later the app honestly asks whether the help held. Supported moments become real outcomes, not in-session optimism.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k6">The long promise, measured</div><h5 data-i18n="v2n.t6">Trajectory: faster, less often</h5><p data-i18n="v2n.p6">Insights now shows the trend that matters: fewer stuck moments, fewer moves per win, rising win rate.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k7">Feels remembered</div><h5 data-i18n="v2n.t7">Your own words, echoed</h5><p data-i18n="v2n.p7">“Your words, 9 days ago: ‘думки по колу’ — sounds like the same thing returning.” The moat, felt in one line.</p></div>
+      <div class="capp win"><div class="kind" data-i18n="v2n.k8">Trust &amp; control</div><h5 data-i18n="v2n.t8">Memory you can edit</h5><p data-i18n="v2n.p8">Model confidence meter, per-barrier “forget this”, and a deeper-look flow that appears only after real repeats.</p></div>
+    </div>
+  </section>
+
   <section class="sec" id="story">
     <p class="kicker" data-i18n="story.kicker">The chain of thought</p>
     <h2 class="sec-h" data-i18n="story.h">How we got here — six steps</h2>
@@ -1529,6 +1546,34 @@ const DICT = {
     uk:'<b>Чесна примітка:</b> у нинішнього Liven уже є паростки цього — «На основі твого запису», «Оскільки слова сьогодні даються важко, ми обираємо практику, зосереджену на тілі». Ця концепція не відкидає цей напрям; вона робить його <b>ядром продуктового лупа</b> замість кроку всередині щоденної рутини й додає дві відсутні деталі: справжнє розуміння на рівні мови й задизайнену гілку «не допомогло».'},
 
   'nav.competitors':{en:'Competitors', uk:'Конкуренти'},
+
+  'v2n.kicker':{en:'This build · v2', uk:'Ця збірка · v2'},
+  'v2n.h':{en:'What v2 adds: the model starts <em>leading</em>', uk:'Що додає v2: модель починає <em>вести</em>'},
+  'v2n.lede':{en:'v1 proved the loop (understand → act → check → learn). v2 makes the accumulated model visible and puts it to work — reactive rescue becomes a predictive companion. Load the sample history in the You tab to see all of it live.', uk:'v1 довела луп (зрозуміти → дія → перевірка → навчання). v2 робить накопичену модель видимою і ставить її до роботи — реактивний порятунок стає передбачувальним компаньйоном. Завантаж демо-історію у вкладці «Ти», щоб побачити все наживо.'},
+  'v2n.k1':{en:'Model in action', uk:'Модель у дії'},
+  'v2n.t1':{en:'Plan ordered for you', uk:'План, підібраний під тебе'},
+  'v2n.p1':{en:'The engine leads with your proven move and shows its work: “worked for you 6/6 times here”.', uk:'Движок веде твоїм перевіреним ходом і показує свою роботу: «допомагало тобі 6/6 разів тут».'},
+  'v2n.k2':{en:'Shared understanding', uk:'Спільне розуміння'},
+  'v2n.t2':{en:'Editable mirror', uk:'Редаговане дзеркало'},
+  'v2n.p2':{en:'“Not quite me? Adjust” — re-tag the core layer and the engine re-reads and re-plans. Your correction feeds the model.', uk:'«Не зовсім про мене? Уточнити» — перетегни головний шар, і движок перечитає й перепланує. Твоя правка годує модель.'},
+  'v2n.k3':{en:"Asks, doesn't guess", uk:'Питає, а не вгадує'},
+  'v2n.t3':{en:'One clarifying question', uk:'Одне уточнювальне питання'},
+  'v2n.p3':{en:'When the input is ambiguous, the engine asks one warm question before mirroring — a wrong mirror costs trust.', uk:'Коли ввід неоднозначний, движок ставить одне тепле питання перед дзеркалом — хибне дзеркало коштує довіри.'},
+  'v2n.k4':{en:'Reactive → predictive', uk:'Реактивне → передбачувальне'},
+  'v2n.t4':{en:'Risk-window pre-empt', uk:'Пре-емпт вікна ризику'},
+  'v2n.p4':{en:'The model knows when you usually get stuck — and offers a 2-minute pre-empt before the window, not a rescue after.', uk:'Модель знає, коли ти зазвичай застрягаєш — і пропонує 2-хвилинний пре-емпт до вікна, а не порятунок після.'},
+  'v2n.k5':{en:'Closing the loop in time', uk:'Замкнута петля в часі'},
+  'v2n.t5':{en:'Delayed “did it hold?”', uk:'Відкладене «втрималось?»'},
+  'v2n.p5':{en:'Hours later the app honestly asks whether the help held. Supported moments become real outcomes, not in-session optimism.', uk:'За години застосунок чесно питає, чи допомога втрималась. Підтримані моменти стають реальними результатами, а не в-сесійним оптимізмом.'},
+  'v2n.k6':{en:'The long promise, measured', uk:'Довга обіцянка, виміряна'},
+  'v2n.t6':{en:'Trajectory: faster, less often', uk:'Траєкторія: швидше, рідше'},
+  'v2n.p6':{en:'Insights now shows the trend that matters: fewer stuck moments, fewer moves per win, rising win rate.', uk:'Інсайти тепер показують головний тренд: менше застрягань, менше ходів до перемоги, зростання показника перемог.'},
+  'v2n.k7':{en:'Feels remembered', uk:'Відчуття «мене памʼятають»'},
+  'v2n.t7':{en:'Your own words, echoed', uk:'Твої власні слова, відлунням'},
+  'v2n.p7':{en:'“Your words, 9 days ago: ‘думки по колу’ — sounds like the same thing returning.” The moat, felt in one line.', uk:'«Твої слова, 9 днів тому: „думки по колу“ — схоже, те саме повертається.» Рів, відчутий в одному рядку.'},
+  'v2n.k8':{en:'Trust &amp; control', uk:'Довіра й контроль'},
+  'v2n.t8':{en:'Memory you can edit', uk:'Памʼять, яку можна редагувати'},
+  'v2n.p8':{en:'Model confidence meter, per-barrier “forget this”, and a deeper-look flow that appears only after real repeats.', uk:'Індикатор впевненості моделі, «забути» по кожному барʼєру і глибший погляд, що зʼявляється лише після реальних повторів.'},
   'nav.install':{en:'Install app', uk:'Встановити'},
 
   'co.kicker':{en:'Where this sits vs the market', uk:'Де це серед ринку'},
@@ -2007,7 +2052,7 @@ function layerKindLabel(k){
     : ({task:'a task',belief:'self-worth / fear',rumination:'rumination',body:'the body',energy:'energy',other:'other'}[k]||k);
 }
 function toggleMirrorEdit(){ const e=document.getElementById('mirror-editor'); if(e) e.style.display = (e.style.display==='none'||!e.style.display)?'block':'none'; }
-function adjustPrimaryLayer(kind){
+function adjustPrimaryLayer(kind, quiet){
   const u=flow.u; let layers=u.layers.slice();
   const idx=layers.findIndex(l=>l.kind===kind);
   if(idx>0){ const l=layers.splice(idx,1)[0]; layers.unshift(l); }
@@ -2020,7 +2065,112 @@ function adjustPrimaryLayer(kind){
   const pz=personalizePlan(base, flow.barrier); flow.plan=pz.plan; flow.personalized=pz.personalized;
   flow.stepIdx=0;
   renderReflection();
-  toast(tt('Updated to your correction — the model learns from this','Оновив під твою правку — модель це вчить'));
+  if(!quiet) toast(tt('Updated to your correction — the model learns from this','Оновив під твою правку — модель це вчить'));
+}
+
+/* ===== v2.1: predictive layer + closing the loop in time ===== */
+/* structured risk-window data (riskWindow() renders it as text) */
+function riskData(){
+  const recent = DB.sessions.filter(s=>Date.now()-s.ts<21*DAY);
+  if(recent.length<4) return null;
+  const byPart={}; recent.forEach(s=>byPart[s.daypart]=(byPart[s.daypart]||0)+1);
+  const top=Object.entries(byPart).sort((a,b)=>b[1]-a[1])[0];
+  if(!top||top[1]<3) return null;
+  const byB={}; recent.forEach(s=>{ if(s.barrier) byB[s.barrier]=(byB[s.barrier]||0)+1; });
+  const tb=Object.entries(byB).sort((a,b)=>b[1]-a[1])[0];
+  return {part:top[0], count:top[1], total:recent.length, barrier:tb?tb[0]:null};
+}
+/* inverse map: barrier → default tool (used when history is thin) */
+const BARRIER2IV = {uncertainty:'firstStep', fear:'thoughtCheck', rumination:'sortThoughts', tension:'breathing', depletion:'energyMatch', fog:'brainDump', overload:'triage', distraction:'firstStep', boundaries:'triage'};
+/* pre-emptive session: engine leads with your best move before the window hits */
+function preemptStart(barrier){
+  const rel = reliableForBarrier(barrier);
+  const iv = rel.length ? rel[0][0] : (BARRIER2IV[barrier]||'brainDump');
+  const h = ivHistFor(barrier, iv);
+  flow = {text:'', preempt:true, ts:Date.now(), tried:[], escalations:0, barrier,
+    u:{layers:[], reflection:'', scale:'moment', scale_note:'', plan:[], viaLLM:false},
+    plan:[{intervention:iv, why: tt('Your highest-rate move for this barrier — before it builds.','Твій найрезультативніший хід для цього барʼєра — поки не наросло.')}], stepIdx:0};
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('Pre-empt · 2 minutes','Пре-емпт · 2 хвилини')}</span>
+    <h2 class="big" style="margin-top:10px">${tt('Beat the window, not the moment.','Випередити вікно, а не гасити момент.')}</h2>
+    <p class="sub">${tt('Your model says “'+barrierName(barrier)+'” tends to hit around now. One small move before it builds usually costs less than a rescue after.','Твоя модель каже: «'+barrierName(barrier)+'» зазвичай бʼє приблизно зараз. Один маленький хід до того, як наросте, коштує менше, ніж порятунок після.')}</p>
+    <div class="card accent"><h4>${ivName(iv)}</h4><p>${ivDesc(iv)}${h.t>=2?` <b style="color:var(--accent)">${tt('Worked for you '+h.w+'/'+h.t+' times here.','Допомагав тобі '+h.w+'/'+h.t+' разів тут.')}</b>`:''}</p></div>
+    <button class="btn" onclick="runStep()">${tt('Start','Почати')} · ${INTERVENTIONS[iv].dur}</button>
+    <button class="btn ghost" onclick="renderRescueHome()">${tt('Not now','Не зараз')}</button>
+  `;
+}
+/* delayed follow-up: did the help actually hold? */
+function pendingFollowupReady(){
+  const p = DB.pending;
+  return p && !p.done && (Date.now()-p.ts > 40e3) ? p : null;   // prototype: 40s ≈ "a few hours later"
+}
+function followupAnswer(v){
+  const p = DB.pending; if(!p) return;
+  const s = DB.sessions.find(x=>x.id===p.sid);
+  if(s) s.followup = v;
+  p.done = true; saveDB();
+  toast(v==='held' ? tt('Confirmed — that counts double in your model','Підтверджено — у моделі це рахується подвійно')
+      : v==='partly' ? tt('Noted — partial holds are still data','Занотовано — часткове теж дані')
+      : tt("Noted — it coming back moves the model, not you",'Занотовано — те, що повернулось, зсуває модель, а не тебе'));
+  go('rescue');
+}
+/* trajectory: is the user getting unstuck faster / less often? */
+function trajectory(){
+  const now=Date.now(), wk=7*DAY;
+  const weeks=[2,1,0].map(i=>DB.sessions.filter(s=>now-s.ts>=i*wk && now-s.ts<(i+1)*wk));
+  if(DB.sessions.length<8 || weeks[0].length===0) return null;
+  const stat=w=>{
+    const wins=w.filter(isWin);
+    const avgMoves = wins.length ? wins.reduce((a,s)=>a+((s.tried&&s.tried.length)||1),0)/wins.length : null;
+    return {n:w.length, winRate: w.length?Math.round(wins.length/w.length*100):null, avgMoves: avgMoves?Math.round(avgMoves*10)/10:null};
+  };
+  return weeks.map(stat);   // [2 weeks ago, last week, this week]
+}
+/* model confidence: how mature is the model of you */
+function modelConfidence(){
+  const n = DB.sessions.length;
+  const stages = [
+    {min:0,  key:'early',   en:'Early — mostly guessing',        uk:'Рання — здебільшого вгадує',      next:5},
+    {min:5,  key:'forming', en:'Forming — first patterns',       uk:'Формується — перші патерни',      next:15},
+    {min:15, key:'confident',en:'Confident — leads with your moves', uk:'Впевнена — веде твоїми ходами', next:30},
+    {min:30, key:'sharp',   en:'Sharp — predicts your windows',  uk:'Гостра — передбачає твої вікна',  next:null},
+  ];
+  const st = stages.filter(s=>n>=s.min).pop();
+  const pct = st.next ? Math.min(100, Math.round((n-st.min)/(st.next-st.min)*100)) : 100;
+  return {n, label: tt(st.en, st.uk), pct, maxed: !st.next};
+}
+/* private language: echo the user's own past words */
+function findEcho(text){
+  const words = t=>String(t||'').toLowerCase().match(/[a-zа-яіїєґ']{5,}/g)||[];
+  const cur = new Set(words(text));
+  if(!cur.size) return null;
+  let best=null;
+  DB.sessions.forEach(s=>{
+    const src = s.phrase || s.text; if(!src) return;
+    if(Date.now()-s.ts < 36e5) return;
+    const overlap = words(src).filter(w=>cur.has(w));
+    const strong = overlap.some(w=>w.length>=6);
+    const score = overlap.length + (strong?1:0);
+    if(score>=2 && (!best || score>best.score)) best={score, phrase: s.phrase || String(s.text).slice(0,60), days: Math.max(1,Math.round((Date.now()-s.ts)/DAY))};
+  });
+  return best;
+}
+/* clarify-first: when the engine isn't sure, it asks — before mirroring */
+function needsClarify(u){
+  return u.layers.length===1 && u.layers[0].kind==='other';
+}
+function renderClarifyQ(){
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt("Before I mirror this back",'Перш ніж віддзеркалити')}</span>
+    <h2 class="big" style="margin-top:10px">${tt("One question — so I don't guess.",'Одне питання — щоб не вгадувати.')}</h2>
+    <p class="sub">${tt("I couldn't confidently read the shape of this. What's closest to the core right now?",'Я не зміг упевнено прочитати форму цього. Що зараз найближче до суті?')}</p>
+    <div class="chips" style="margin-top:6px">${LAYER_KINDS.map(k=>`<button class="chip" onclick="adjustPrimaryLayer('${k}', true)">${layerKindLabel(k)}</button>`).join('')}</div>
+    <div style="height:8px"></div>
+    <button class="btn ghost" onclick="renderReflection()">${tt("Honestly not sure — just go",'Чесно не знаю — просто далі')}</button>
+    <p class="footer-note">${tt('Asking beats guessing — a wrong mirror costs trust.','Спитати краще, ніж вгадувати — хибне дзеркало коштує довіри.')}</p>
+  `;
 }
 
 /* =====================================================================
@@ -2389,8 +2539,33 @@ function renderRescueHome(){
   const ci = todaysCheckin();
   const todayWins = DB.sessions.filter(s=>todayKey(s.ts)===todayKey() && isWin(s)).length;
   const S = getStarters();
+  /* v2.1: delayed follow-up + pre-emptive risk-window nudge (hidden during guided demos) */
+  const fu = !window.__demoActive ? pendingFollowupReady() : null;
+  const fuHtml = fu ? `
+    <div class="card purple" style="margin-bottom:14px">
+      <h4>⏳ ${tt('Earlier today','Раніше сьогодні')}</h4>
+      <p>${tt('You got moving on','Ти зрушив із')} ${fu.label?`“${esc(fu.label)}”`:tt('a stuck moment','моментом застрягання')} ${tt('after','після')} <b>${ivName(fu.iv)}</b>. ${tt('Honest check: did it actually hold?','Чесна перевірка: воно справді втрималось?')}</p>
+      <div class="row" style="margin-top:10px;gap:6px">
+        <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="followupAnswer('held')">${tt('Yes, it held','Так, тримається')}</button>
+        <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="followupAnswer('partly')">${tt('Partly','Частково')}</button>
+        <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="followupAnswer('returned')">${tt('It came back','Повернулось')}</button>
+      </div>
+      <p style="font-size:10.5px;color:var(--ink-3);margin:8px 0 0">${tt('Prototype note: appears ~40s after a win; in production — hours later, via push.','Нотатка прототипу: зʼявляється ~40 с після перемоги; у проді — за години, через пуш.')}</p>
+    </div>`:'';
+  const rd = !window.__demoActive ? riskData() : null;
+  const barrierWonToday = rd && DB.sessions.some(s=>todayKey(s.ts)===todayKey() && s.barrier===rd.barrier && isWin(s));
+  const inWindow = rd && daypart(Date.now())===rd.part;
+  const preHtml = (rd && rd.barrier && !barrierWonToday) ? `
+    <div class="card amber" style="margin-bottom:14px">
+      <h4>⚡ ${tt('Your risk window','Твоє вікно ризику')}</h4>
+      <p>${inWindow
+        ? tt('This is usually your window: <b>'+dayPartName(rd.part)+'</b>, most often “'+barrierName(rd.barrier)+'” ('+rd.count+' of your last '+rd.total+' sessions). A 2-minute pre-empt now beats a rescue later.','Зазвичай це твоє вікно: <b>'+dayPartName(rd.part)+'</b>, найчастіше — «'+barrierName(rd.barrier)+'» ('+rd.count+' з останніх '+rd.total+' сесій). 2-хвилинний пре-емпт зараз кращий за порятунок потім.')
+        : tt('Your model: “'+barrierName(rd.barrier)+'” usually hits <b>'+dayPartName(rd.part)+'</b> ('+rd.count+' of '+rd.total+' recent sessions). Pre-empting before the window is the cheapest move you have.','Твоя модель: «'+barrierName(rd.barrier)+'» зазвичай бʼє <b>'+dayPartName(rd.part)+'</b> ('+rd.count+' з '+rd.total+' останніх сесій). Пре-емпт до вікна — твій найдешевший хід.')}</p>
+      <button class="btn" style="margin-top:10px" onclick="preemptStart('${rd.barrier}')">${tt('2-minute pre-empt','2-хвилинний пре-емпт')}</button>
+    </div>`:'';
   scr.innerHTML = `
     ${llmBadge()}
+    ${fuHtml}${preHtml}
     <h2 class="big">${tt("What's going on right now?",'Що зараз відбувається?')}</h2>
     <p class="sub">${tt("Say it like it is, in your own words — any language. Type or tap the mic to talk. Messy is fine; that's the point.",'Скажи, як є, своїми словами — будь-якою мовою. Пиши або тапни мікрофон, щоб говорити. Хаотично — це нормально, у цьому й суть.')}</p>
     <div class="ta-wrap">
@@ -2486,6 +2661,8 @@ function afterUnderstand(){
   const pz = personalizePlan(flow.plan, flow.barrier);   // v2: lead with what works for YOU
   flow.plan = pz.plan; flow.personalized = pz.personalized;
   flow.stepIdx = 0;
+  /* v2.1: unsure? ask ONE question instead of guessing (skipped inside guided demos) */
+  if(!window.__demoActive && !flow.edited && needsClarify(u)){ renderClarifyQ(); return; }
   renderReflection();
 }
 function renderEngineError(e, retry, fallback){
@@ -2523,6 +2700,7 @@ function renderReflection(){
       <h4 style="color:var(--accent)">${tt('What I heard','Що я почув')}</h4>
       <p class="hypothesis" style="margin:4px 0 0;font-size:16.5px">${esc(u.reflection)}</p>
     </div>
+    ${(function(){ const e=findEcho(flow.text); return e?`<div class="card purple"><h4>📖 ${tt('Your own words, '+e.days+(e.days===1?' day':' days')+' ago','Твої власні слова, '+e.days+' дн. тому')}</h4><p><i>“${esc(e.phrase)}”</i> — ${tt('sounds like the same thing returning. The engine remembers how that one went.','схоже, те саме повертається. Движок памʼятає, як було минулого разу.')}</p></div>`:''; })()}
     ${u.layers.length ? `<div class="card">
       <h4>${tt('The layers underneath','Шари під цим')}</h4>
       ${u.layers.map(l=>`<div class="layer"><span class="k k-${l.kind}">${l.kind}</span><span>${l.quote?`<i style="color:var(--ink-3)">“${esc(l.quote)}”</i> — `:''}${esc(l.note)}</span></div>`).join('')}
@@ -2557,6 +2735,11 @@ function runStep(){
 }
 function ivDone(){
   stopTimers();
+  if(flow.bonusRound){   // v2.1: body-bonus after a clear-but-wound-up check — no second session log
+    flow.bonusRound = false;
+    renderWinSummary(window.__sessRef, tt('Good — the body got its minute too. Head and body leaving together.','Добре — тіло теж отримало свою хвилину. Голова й тіло йдуть разом.'));
+    return;
+  }
   if(flow.stepIdx < flow.plan.length-1){
     flow.stepIdx++;
     const nid = flow.plan[flow.stepIdx].intervention;
@@ -3080,12 +3263,20 @@ function saveSession(){
     id: 's'+Math.random().toString(36).slice(2,9),
     ts: flow.ts || Date.now(),
     text: (flow.text||'').slice(0,300),
+    phrase: ((flow.u&&flow.u.layers&&flow.u.layers[0]&&flow.u.layers[0].quote)||'').slice(0,80),   // v2.1: the user's own words, for echoes
     barrier: flow.barrier, scale: (flow.u&&flow.u.scale)||'moment',
     intervention: flow.tried[flow.tried.length-1]||null, tried: flow.tried.slice(),
     helped: flow.helped, clearer: !!flow.clearer,
+    preempt: !!flow.preempt,
     daypart: daypart(Date.now()), viaLLM: !!(flow.u&&flow.u.viaLLM),
   };
-  DB.sessions.push(sess); saveDB();
+  DB.sessions.push(sess);
+  /* v2.1: a win schedules a delayed "did it hold?" follow-up (prod: hours later / push) */
+  if(isWin(sess) && !flow.preempt){
+    const ci = todaysCheckin();
+    DB.pending = {sid:sess.id, ts:Date.now(), iv:sess.intervention, barrier:sess.barrier, label:(ci&&ci.hardest)||''};
+  }
+  saveDB();
   return sess;
 }
 function learningLine(sess){
@@ -3103,6 +3294,13 @@ function finishSession(clearer){
   const sess = saveSession();
   const success = isWin(sess);
   if(!success){ startEscalation(sess); return; }
+  /* v2.1: the two answers disagree → each mismatch gets its own designed move */
+  const felt = sess.helped==='much'||sess.helped==='bit';
+  if(felt && !clearer){ renderClarityMicro(sess); return; }
+  if(!felt && clearer){ renderBodyOffer(sess); return; }
+  renderWinSummary(sess);
+}
+function renderWinSummary(sess, extraLine){
   const weekWins = DB.sessions.filter(s=>Date.now()-s.ts<7*DAY && isWin(s)).length;
   $$('#screen-rescue').innerHTML = `
     <div style="text-align:center;padding-top:26px">
@@ -3110,6 +3308,7 @@ function finishSession(clearer){
       <h2 class="big" style="margin-top:14px">${tt("That's the whole product.",'Це і є весь продукт.')}</h2>
       <p class="sub" style="margin-top:6px">${tt("You came in stuck, you're leaving with movement.",'Ти прийшов застряглим, ідеш із рухом.')} ${weekWins} ${tt(weekWins===1?'supported moment this week':'supported moments this week','підтриманих моментів цього тижня')}.</p>
     </div>
+    ${extraLine?`<div class="card accent"><p>${extraLine}</p></div>`:''}
     <div class="card">
       <h4><span style="color:var(--amber)">✦</span> ${tt('What the engine learned','Що дізнався движок')}</h4>
       <p>${learningLine(sess)}</p>
@@ -3117,6 +3316,44 @@ function finishSession(clearer){
     <button class="btn" onclick="renderRescueHome()">${tt('Done','Готово')}</button>
     <button class="btn ghost" onclick="go('insights')">${tt('See your patterns','Побачити свої патерни')}</button>
   `;
+}
+/* v2.1: felt better but no clarity → 30-second next-move capture */
+function renderClarityMicro(sess){
+  window.__sessRef = sess;
+  $$('#screen-rescue').innerHTML = `
+    <span class="pill accent">${tt('Better — but not clearer','Легше — але не ясніше')}</span>
+    <h2 class="big" style="margin-top:12px">${tt('30 seconds: name the one next thing.','30 секунд: назви одну наступну річ.')}</h2>
+    <p class="sub">${tt("The feeling moved — good. Clarity is the other half, and it's usually one honest sentence away.",'Відчуття зрушило — добре. Ясність — друга половина, і зазвичай до неї одне чесне речення.')}</p>
+    <input type="text" id="cm-next" placeholder="${tt('The very next thing I will do is…','Найперше, що я зроблю, — це…')}">
+    <div style="height:12px"></div>
+    <button class="btn" onclick="clarityMicroSave()">${tt('Lock it in','Зафіксувати')}</button>
+    <button class="btn ghost" onclick="renderWinSummary(window.__sessRef)">${tt('Skip','Пропустити')}</button>
+  `;
+}
+function clarityMicroSave(){
+  const v = ($$('#cm-next')||{}).value||'';
+  const sess = window.__sessRef;
+  if(v.trim() && sess){ sess.nextMove = v.trim().slice(0,120); sess.clearer = true; saveDB(); }
+  renderWinSummary(sess, v.trim()?tt('Your next move is locked: “'+esc(v.trim())+'”. That upgraded this session to a full win.','Твій наступний крок зафіксовано: «'+esc(v.trim())+'». Це підняло сесію до повної перемоги.'):null);
+}
+/* v2.1: clearer but the feeling hasn't moved → offer the body a minute */
+function renderBodyOffer(sess){
+  window.__sessRef = sess;
+  $$('#screen-rescue').innerHTML = `
+    <span class="pill accent">${tt('Clearer — but still wound up','Ясніше — але ще на обертах')}</span>
+    <h2 class="big" style="margin-top:12px">${tt('The head has a plan. The body missed the memo.','Голова має план. Тіло ще не в курсі.')}</h2>
+    <p class="sub">${tt('Clarity without relief usually means the body is still activated. One minute of breathing often closes that gap — optional, but cheap.','Ясність без полегшення зазвичай означає, що тіло ще активоване. Хвилина дихання часто закриває цей розрив — необовʼязково, але дешево.')}</p>
+    <button class="btn" onclick="bonusBreathing()">${tt('One minute for the body','Хвилина для тіла')}</button>
+    <button class="btn ghost" onclick="renderWinSummary(window.__sessRef)">${tt("I'm fine — finish",'Все ок — завершити')}</button>
+  `;
+}
+function bonusBreathing(){
+  flow.bonusRound = true;
+  flow.plan = [{intervention:'breathing', why:''}];
+  flow.stepIdx = 0;
+  flow.payload = {};
+  flow.tried.push('breathing');
+  breathing();
 }
 
 async function startEscalation(sess){
@@ -3338,16 +3575,9 @@ function redoCheckin(){
   saveDB(); renderToday();
 }
 function riskWindow(){
-  const recent = DB.sessions.filter(s=>Date.now()-s.ts<21*DAY);
-  if(recent.length<4) return null;
-  const byPart = {};
-  recent.forEach(s=>byPart[s.daypart]=(byPart[s.daypart]||0)+1);
-  const top = Object.entries(byPart).sort((a,b)=>b[1]-a[1])[0];
-  if(!top || top[1]<3) return null;
-  const byBarrier = {};
-  recent.forEach(s=>{ if(s.barrier) byBarrier[s.barrier]=(byBarrier[s.barrier]||0)+1; });
-  const tb = Object.entries(byBarrier).sort((a,b)=>b[1]-a[1])[0];
-  return tt(`You get stuck most often ${dayPartName(top[0])} (${top[1]} of your last ${recent.length} sessions)${tb?`, usually ${barrierName(tb[0])}`:''}. If today has a hard task — try to touch it before then.`,`Найчастіше ти застрягаєш ${dayPartName(top[0])} (${top[1]} з останніх ${recent.length} сесій)${tb?`, зазвичай — ${barrierName(tb[0])}`:''}. Якщо сьогодні є складна задача — спробуй торкнутися її до того.`);
+  const rd = riskData();
+  if(!rd) return null;
+  return tt(`You get stuck most often ${dayPartName(rd.part)} (${rd.count} of your last ${rd.total} sessions)${rd.barrier?`, usually ${barrierName(rd.barrier)}`:''}. If today has a hard task — try to touch it before then.`,`Найчастіше ти застрягаєш ${dayPartName(rd.part)} (${rd.count} з останніх ${rd.total} сесій)${rd.barrier?`, зазвичай — ${barrierName(rd.barrier)}`:''}. Якщо сьогодні є складна задача — спробуй торкнутися її до того.`);
 }
 
 /* =====================================================================
@@ -3398,6 +3628,23 @@ function renderInsights(){
     tryNext = tt(`${best.name} is your highest-percentage move (${Math.round(best.rate*100)}%). Next week, try reaching for it <b>earlier</b> — before the ${topPart[0]} window where you usually get stuck.`,`${best.name} — твій найрезультативніший хід (${Math.round(best.rate*100)}%). Наступного тижня спробуй братися за нього <b>раніше</b> — до вікна «${dayPartName(topPart[0])}», коли ти зазвичай застрягаєш.`);
   }
   const dpUk = {morning:'ранок',afternoon:'день',evening:'вечір',night:'ніч'};
+  const traj = trajectory();   // v2.1: [2wk ago, last wk, this wk]
+  const trajRow = (label, vals, unit, lowerIsBetter)=>{
+    const seq = vals.map(v=>v===null?'—':v+(unit||'')).join(' → ');
+    const a=vals[0], c=vals[vals.length-1];
+    let dir='';
+    if(a!==null&&c!==null&&a!==c){ const improved = lowerIsBetter ? c<a : c>a; dir = ` <b style="color:${improved?'var(--accent)':'var(--amber)'}">${improved?tt('improving','краще'):tt('watch','пильнуй')}</b>`; }
+    return `<div class="model-row"><span>${label}</span><b style="font-variant-numeric:tabular-nums">${seq}${dir}</b></div>`;
+  };
+  const trajHtml = traj ? `
+    <div class="card purple">
+      <h4>${tt('Are you getting unstuck faster?','Чи вибираєшся ти швидше?')}</h4>
+      <p style="font-size:12px;margin-bottom:10px">${tt('The long promise, measured: three weeks, oldest → newest.','Довга обіцянка, виміряна: три тижні, від старшого до новішого.')}</p>
+      ${trajRow(tt('Stuck moments / week','Застрягань / тиждень'), traj.map(t=>t.n), '', true)}
+      ${trajRow(tt('Moves needed per win','Ходів до перемоги'), traj.map(t=>t.avgMoves), '', true)}
+      ${trajRow(tt('Win rate','Показник перемог'), traj.map(t=>t.winRate), '%', false)}
+      <p style="font-size:10.5px;color:var(--ink-3);margin:8px 0 0">${tt('Honest read: fewer stuck moments and fewer moves per win = the model is doing its job. Short windows are noisy — trends over months are the real signal.','Чесне читання: менше застрягань і менше ходів до перемоги = модель робить свою роботу. Короткі вікна шумні — справжній сигнал у трендах за місяці.')}</p>
+    </div>`:'';
 
   scr.innerHTML = `
     <p class="eyebrow">${tt('Liven · Insights','Liven · Інсайти')}</p>
@@ -3412,6 +3659,7 @@ function renderInsights(){
         <div style="font-size:12px;color:var(--ink-3);margin-top:4px">${thisWeek.length} ${tt(thisWeek.length===1?'session total':'sessions total','сесій усього')}</div>
       </div>
     </div>
+    ${trajHtml}
 
     ${topB?`<div class="card accent">
       <h4>${tt('What the engine knows about you','Що движок знає про тебе')}</h4>
@@ -3469,7 +3717,12 @@ function renderYou(){
     <p class="sub">${tt("This is the moat: not a bigger library — a model of <i>you</i> that gets sharper with every session. A competitor starts from zero.",'Це і є рів: не більша бібліотека — модель <i>тебе</i>, що гострішає з кожною сесією. Конкурент починає з нуля.')}</p>
     ${all.length===0
       ? `<div class="card"><p>${tt('Nothing yet. Run a Rescue session or load the sample history to see the model form.','Поки нічого. Проведи сесію Порятунку або завантаж демо-історію, щоб побачити, як формується модель.')}</p></div>`
-      : `<div class="card">
+      : `${(function(){ const mc=modelConfidence(); return `<div class="card purple">
+          <h4>${tt('Model confidence','Впевненість моделі')}</h4>
+          <p style="font-size:13px;margin:0 0 8px"><b>${mc.label}</b> · ${mc.n} ${tt('sessions','сесій')}</p>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.max(6,mc.pct)}%"></div></div>
+          <p style="font-size:11px;color:var(--ink-3);margin:7px 0 0">${mc.maxed?tt('The model now leads with your moves and predicts your windows.','Модель тепер веде твоїми ходами й передбачає твої вікна.'):tt('Every honest answer sharpens it — including the “no”s.','Кожна чесна відповідь її гострить — включно з «ні».')}</p>
+        </div>`; })()}<div class="card">
           <h4>${tt('Barriers seen · your best tool for each','Побачені барʼєри · твій найкращий інструмент для кожного')}</h4>
           ${rows.map(r=>`<div class="model-row"><span>${r.barrier} <span style="color:var(--ink-3)">×${r.t}</span></span><span style="display:flex;align-items:center;gap:10px"><b style="font-size:13px;color:var(--accent)">${r.tool}</b><button class="mem-forget" onclick="forgetBarrier('${r.id}')" title="${tt('Forget this','Забути це')}">✕</button></span></div>`).join('')}
           <p style="font-size:11px;color:var(--ink-3);margin:10px 0 0">${tt("You control this memory — tap ✕ to make Liven forget a barrier's history.",'Ти керуєш цією памʼяттю — тапни ✕, щоб Liven забув історію барʼєра.')}</p>
@@ -3484,6 +3737,8 @@ function renderYou(){
           <div class="model-row"><span>${tt('Sessions logged','Записано сесій')}</span><b>${all.length}</b></div>
           <div class="model-row"><span>${tt('Supported moments','Підтриманих моментів')}</span><b>${all.filter(isWin).length}</b></div>
           <div class="model-row"><span>${tt('Overall help rate','Загальний показник допомоги')}</span><b>${Math.round(all.filter(isWin).length/all.length*100)}%</b></div>
+          <div class="model-row"><span>${tt('Confirmed hours later','Підтверджено згодом')}</span><b>${all.filter(s=>s.followup==='held').length}</b></div>
+          <div class="model-row"><span>${tt('Pre-empted before the window','Попереджено до вікна')}</span><b>${all.filter(s=>s.preempt&&isWin(s)).length}</b></div>
           <div class="model-row"><span>${tt('Sessions via LLM','Сесій через LLM')}</span><b>${all.filter(s=>s.viaLLM).length}</b></div>
         </div>`}
     <div class="card purple">
@@ -3601,7 +3856,7 @@ function doForgetBarrier(barrier){
   saveDB(); closeModal(); toast(tt('Forgotten — model updated','Забуто — модель оновлено')); renderYou();
 }
 function clearAll(){
-  DB.sessions=[]; DB.checkins=[]; DB.weekPlan=null; saveDB();
+  DB.sessions=[]; DB.checkins=[]; DB.weekPlan=null; DB.pending=null; saveDB();
   toast(tt('Sessions & plans cleared','Сесії та плани очищено')); renderYou();
 }
 
@@ -3639,7 +3894,20 @@ function seedDemo(){
     mk(1,15,'fear','thoughtCheck','much',true,'pattern'),
     mk(0,10,'rumination','brainDump','bit',true),
   ];
+  /* v2.1: the user's own words on some sessions — fuels the private-language echo */
+  S[1].phrase='наче не встигаю нічого і всі це бачать';
+  S[3].phrase='думки крутяться по колу';
+  S[7].phrase='знову не встигаю, все навалилось';
+  S[10].phrase='голова кипить, думки по колу';
+  S[17].phrase='не встигаю за всім, руки опускаються';
+  /* v2.1: older sessions took more moves — makes the "faster over time" trend real */
+  S[0].tried=['sortThoughts','breathing']; S[1].tried=['breathing','firstStep']; S[3].tried=['brainDump','thoughtCheck'];
+  S[5].tried=['grounding','breathing']; S[6].tried=['breathing','sortThoughts','firstStep']; S[9].tried=['brainDump','thoughtCheck'];
+  S[12].tried=['grounding','breathing'];
+  /* v2.1: one confirmed-later win + one pending follow-up to answer right now */
+  S[15].followup='held'; S[18].followup='held';
   DB.sessions = DB.sessions.concat(S);
+  DB.pending = {sid:S[S.length-1].id, ts: now-3*36e5, iv:S[S.length-1].intervention, barrier:S[S.length-1].barrier, label:'Q3 planning doc'};
   if(!todaysCheckin()) DB.checkins.push({ts:now-2*36e5, hardest:'Q3 planning doc', energy:2, intent:'touch the doc before 15:00'});
   saveDB();
   toast(tt('Sample history loaded','Демо-історію завантажено'));
@@ -3648,6 +3916,11 @@ function seedDemo(){
 
 /* boot */
 if(DB.introSeen) $$('#intro').style.display='none';
+/* v2.1: in app mode the first launch IS the product — no tour, straight to the question */
+if(document.documentElement.className.indexOf('app-mode')>-1){
+  $$('#intro').style.display='none';
+  if(!DB.introSeen){ DB.introSeen=true; saveDB(); setTimeout(function(){ try{ toast(tt('No tour. The question below is the product.','Без туру. Питання нижче і є продукт.')); }catch(e){} }, 600); }
+}
 renderRescueHome();
 if(typeof applyLang==='function') applyLang();
 if(typeof refreshInstallBtn==='function') refreshInstallBtn();
