@@ -76,6 +76,8 @@
   .mem-forget{font-size:11px;font-weight:700;color:var(--ink-3);background:none;border:none;cursor:pointer;padding:2px 4px}
   .mem-forget:hover{color:var(--bad)}
   .deeper-card{background:linear-gradient(140deg,var(--purple-soft),var(--accent-soft));border-radius:16px;padding:15px 17px;margin-bottom:14px}
+  .ok-strip{margin-top:14px;padding:13px 14px;border:1.5px dashed var(--line);border-radius:15px}
+  .ok-strip p{font-size:12.5px;color:var(--ink-3);margin:0 0 9px;line-height:1.45}
   .deeper-card h4{margin:0 0 5px}
   .deeper-card .why{font-size:13px;color:var(--ink-2);line-height:1.5;margin:0 0 11px}
   /* voice dictation on the entry screen */
@@ -678,6 +680,10 @@
       <div class="capp"><div class="kind" data-i18n="v2n.k6">The long promise, measured</div><h5 data-i18n="v2n.t6">Trajectory: faster, less often</h5><p data-i18n="v2n.p6">Insights now shows the trend that matters: fewer stuck moments, fewer moves per win, rising win rate.</p></div>
       <div class="capp"><div class="kind" data-i18n="v2n.k7">Feels remembered</div><h5 data-i18n="v2n.t7">Your own words, echoed</h5><p data-i18n="v2n.p7">“Your words, 9 days ago: ‘думки по колу’ — sounds like the same thing returning.” The moat, felt in one line.</p></div>
       <div class="capp win"><div class="kind" data-i18n="v2n.k8">Trust &amp; control</div><h5 data-i18n="v2n.t8">Memory you can edit</h5><p data-i18n="v2n.p8">Model confidence meter, per-barrier “forget this”, and a deeper-look flow that appears only after real repeats.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k9">Daily loop</div><h5 data-i18n="v2n.t9">Evening close + “yesterday you said”</h5><p data-i18n="v2n.p9">The morning primes, the evening closes — and next morning continues the conversation. Two 30-second touchpoints, zero guilt streaks.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k10">Lessons as mechanism</div><h5 data-i18n="v2n.t10">Micro-lessons from your data</h5><p data-i18n="v2n.p10">3-minute lessons unlocked by real repeats, opening with your stats, ending with one line the engine quotes back in future rescues.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k11">Value on OK days</div><h5 data-i18n="v2n.t11">Good day = data · fire drills</h5><p data-i18n="v2n.p11">Easy days capture what protects you; calm minutes rehearse your reliable move so it fires faster when it's hot.</p></div>
+      <div class="capp"><div class="kind" data-i18n="v2n.k12">Long loop</div><h5 data-i18n="v2n.t12">Weekly ritual + experiment</h5><p data-i18n="v2n.p12">Once a week: what the model learned, the trend, and one concrete experiment — honestly reviewed the week after.</p></div>
     </div>
   </section>
 
@@ -1574,6 +1580,18 @@ const DICT = {
   'v2n.k8':{en:'Trust &amp; control', uk:'Довіра й контроль'},
   'v2n.t8':{en:'Memory you can edit', uk:'Памʼять, яку можна редагувати'},
   'v2n.p8':{en:'Model confidence meter, per-barrier “forget this”, and a deeper-look flow that appears only after real repeats.', uk:'Індикатор впевненості моделі, «забути» по кожному барʼєру і глибший погляд, що зʼявляється лише після реальних повторів.'},
+  'v2n.k9':{en:'Daily loop', uk:'Добова петля'},
+  'v2n.t9':{en:'Evening close + “yesterday you said”', uk:'Вечірнє закриття + «вчора ти казав»'},
+  'v2n.p9':{en:'The morning primes, the evening closes — and next morning continues the conversation. Two 30-second touchpoints, zero guilt streaks.', uk:'Ранок праймить, вечір закриває — а наступний ранок продовжує розмову. Два тачпоінти по 30 секунд, нуль стріків із провиною.'},
+  'v2n.k10':{en:'Lessons as mechanism', uk:'Уроки як механізм'},
+  'v2n.t10':{en:'Micro-lessons from your data', uk:'Мікроуроки з твоїх даних'},
+  'v2n.p10':{en:'3-minute lessons unlocked by real repeats, opening with your stats, ending with one line the engine quotes back in future rescues.', uk:'3-хвилинні уроки, розблоковані реальними повторами: починаються з твоєї статистики, закінчуються рядком, який движок цитує в наступних порятунках.'},
+  'v2n.k11':{en:'Value on OK days', uk:'Цінність в ОК-дні'},
+  'v2n.t11':{en:'Good day = data · fire drills', uk:'Хороший день = дані · пожежні навчання'},
+  'v2n.p11':{en:"Easy days capture what protects you; calm minutes rehearse your reliable move so it fires faster when it's hot.", uk:'Легкі дні фіксують, що тебе захищає; спокійні хвилини тренують твій надійний хід, щоб у гарячий момент він спрацював швидше.'},
+  'v2n.k12':{en:'Long loop', uk:'Довга петля'},
+  'v2n.t12':{en:'Weekly ritual + experiment', uk:'Тижневий ритуал + експеримент'},
+  'v2n.p12':{en:'Once a week: what the model learned, the trend, and one concrete experiment — honestly reviewed the week after.', uk:'Раз на тиждень: що дізналась модель, тренд і один конкретний експеримент — чесно переглянутий наступного тижня.'},
   'nav.install':{en:'Install app', uk:'Встановити'},
 
   'co.kicker':{en:'Where this sits vs the market', uk:'Де це серед ринку'},
@@ -1986,11 +2004,11 @@ const KEY = 'liven-unstuck-proto-v2';
 function loadDB(){
   try{
     const v2 = JSON.parse(localStorage.getItem(KEY)||'null');
-    if(v2) return Object.assign({sessions:[],checkins:[],weekPlan:null,settings:{},introSeen:false}, v2);
+    if(v2) return Object.assign({sessions:[],checkins:[],weekPlan:null,settings:{},introSeen:false,closes:[],goodDays:[],lessons:{},drills:{},experiment:null}, v2);
     const v1 = JSON.parse(localStorage.getItem('liven-unstuck-proto-v1')||'null');
-    if(v1) return Object.assign({sessions:[],checkins:[],weekPlan:null,settings:{},introSeen:false}, v1);
+    if(v1) return Object.assign({sessions:[],checkins:[],weekPlan:null,settings:{},introSeen:false,closes:[],goodDays:[],lessons:{},drills:{},experiment:null}, v1);
   }catch(e){}
-  return {sessions:[],checkins:[],weekPlan:null,settings:{},introSeen:false};
+  return {sessions:[],checkins:[],weekPlan:null,settings:{},introSeen:false,closes:[],goodDays:[],lessons:{},drills:{},experiment:null};
 }
 function saveDB(){ try{ localStorage.setItem(KEY, JSON.stringify(DB)); }catch(e){} }
 let DB = loadDB();
@@ -2171,6 +2189,233 @@ function renderClarifyQ(){
     <button class="btn ghost" onclick="renderReflection()">${tt("Honestly not sure — just go",'Чесно не знаю — просто далі')}</button>
     <p class="footer-note">${tt('Asking beats guessing — a wrong mirror costs trust.','Спитати краще, ніж вгадувати — хибне дзеркало коштує довіри.')}</p>
   `;
+}
+
+/* ===== v2.2: daily loop, micro-lessons, OK-mode, weekly experiment ===== */
+function todayClose(){ return (DB.closes||[]).find(c=>c.dayKey===todayKey()); }
+function yesterdayClose(){ return (DB.closes||[]).find(c=>c.dayKey===todayKey(Date.now()-DAY)); }
+function weekKey(ts){ const d=new Date(ts||Date.now()); const j=new Date(d.getFullYear(),0,1); return d.getFullYear()+'-'+Math.floor(((d-j)/DAY + j.getDay())/7); }
+
+/* --- micro-lessons: explanations of YOUR model, unlocked by real repeats --- */
+const LESSONS = {
+  rumination: {
+    title:{en:'Why thought loops feed on staying internal', uk:'Чому цикл думок живиться тим, що лишається в голові'},
+    concept:{en:'A rumination loop is not solving — it is rehearsing. The brain keeps an unfinished worry open like a task and replays it to make sure nothing is dropped. Externalizing — saying it, writing it, naming it — closes what the brain keeps reopening: what is written down no longer needs rehearsing. That is the mechanics of why dumping and sorting thoughts work on you. Not magic — task closure.',
+        uk:'Румінація — це не розвʼязування, а репетиція. Мозок тримає незакриту тривогу як відкриту задачу і прокручує її, щоб нічого не «випало». Винесення назовні — сказати, записати, назвати — закриває те, що мозок постійно перевідкриває: записане більше не треба репетирувати. Ось механіка того, чому вивантаження й сортування думок працюють на тобі. Не магія — закриття задачі.'},
+    tryIv:'brainDump',
+    takeaway:{en:'Written down = no longer rehearsed', uk:'Записане — більше не крутиться'}
+  },
+  uncertainty: {
+    title:{en:'Why the smallest physical step breaks paralysis', uk:'Чому найменший фізичний крок ламає параліч'},
+    concept:{en:'Stuck is not lazy. Facing a block too big to grasp, the brain refuses to start because it cannot see the first edge. A step small enough to be physical — open the doc, write one line — gives the system evidence of movement, and evidence beats intention. Motivation follows action, not the other way around. That is why “first step” keeps winning for you.',
+        uk:'Застрягання — це не лінь. Перед блоком, який неможливо охопити, мозок відмовляється починати, бо не бачить першого краю. Крок настільки малий, що він фізичний — відкрити док, написати один рядок — дає системі доказ руху, а доказ сильніший за намір. Мотивація йде за дією, а не навпаки. Тому «перший крок» у тебе стабільно виграє.'},
+    tryIv:'firstStep',
+    takeaway:{en:'Motivation follows the step — not before it', uk:'Мотивація приходить після кроку, не до'}
+  },
+  fear: {
+    title:{en:'A thought is not a fact', uk:'Думка — не факт'},
+    concept:{en:'The mind states fears in the grammar of facts: “they will resent me”. Stated as a fact, it commands obedience. Putting the thought on trial — evidence for, evidence against — re-files it from fact to hypothesis, and hypotheses weigh less. You do not have to win the argument; re-filing alone loosens the grip.',
+        uk:'Розум формулює страхи граматикою фактів: «мене хейтитимуть». Сказане як факт — вимагає покори. Суд над думкою — докази за, докази проти — перекладає її з факту в гіпотезу, а гіпотези важать менше. Не обовʼязково виграти суперечку; саме перекладання вже послаблює хватку.'},
+    tryIv:'thoughtCheck',
+    takeaway:{en:'“They will hate me” is a hypothesis, not a verdict', uk:'«Мене хейтитимуть» — гіпотеза, не вирок'}
+  },
+  tension: {
+    title:{en:'Body first, when the head is boiling', uk:'Спершу тіло, коли голова кипить'},
+    concept:{en:'An activated body keeps the alarm on, and no argument turns an alarm off. The slow exhale is the one direct lever: sixty seconds of longer exhales tell the system the danger has passed. Thinking genuinely works better after — which is why your best sessions started with the body, not the plan.',
+        uk:'Активоване тіло тримає тривогу ввімкненою, і жоден аргумент сирену не вимикає. Повільний видих — єдиний прямий важіль: шістдесят секунд довших видихів кажуть системі, що небезпека минула. Думається справді краще після — тому твої найкращі сесії починалися з тіла, а не з плану.'},
+    tryIv:'breathing',
+    takeaway:{en:'Longer exhale first — think after', uk:'Спершу довший видих — думати потім'}
+  }
+};
+const LESSON4BARRIER = {rumination:'rumination', uncertainty:'uncertainty', fog:'uncertainty', distraction:'uncertainty', fear:'fear', boundaries:'fear', tension:'tension', overload:'tension', depletion:'tension'};
+function lessonIdFor(barrier){ return LESSON4BARRIER[barrier]||null; }
+function lessonDone(id){ return !!(DB.lessons&&DB.lessons[id]&&DB.lessons[id].done); }
+function lessonAvailable(barrier){
+  const id = lessonIdFor(barrier); if(!id || lessonDone(id)) return null;
+  const n = DB.sessions.filter(s=>lessonIdFor(s.barrier)===id).length;
+  return n>=3 ? id : null;
+}
+function lessonHook(id){
+  const rel = Object.keys(LESSON4BARRIER).filter(b=>LESSON4BARRIER[b]===id);
+  const mine = DB.sessions.filter(s=>rel.includes(s.barrier));
+  const byPart={}; mine.forEach(s=>byPart[s.daypart]=(byPart[s.daypart]||0)+1);
+  const top = Object.entries(byPart).sort((a,b)=>b[1]-a[1])[0];
+  return tt('This showed up for you '+mine.length+' times'+(top?', most often in the '+top[0]:'')+'. This lesson is about YOUR pattern — not theory.',
+            'Це зʼявлялось у тебе '+mine.length+' разів'+(top?', найчастіше '+dayPartName(top[0]):'')+'. Цей урок — про ТВІЙ патерн, не про теорію.');
+}
+function openLesson(id){
+  const L=LESSONS[id]; if(!L) return;
+  go('rescue');
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('Micro-lesson · 3 min','Мікроурок · 3 хв')}</span>
+    <h2 class="big" style="margin-top:10px">${tt(L.title.en, L.title.uk)}</h2>
+    <div class="card accent"><h4>${tt('Why you are seeing this','Чому ти це бачиш')}</h4><p>${lessonHook(id)}</p></div>
+    <div class="card"><h4>${tt('The idea','Ідея')}</h4><p>${tt(L.concept.en, L.concept.uk)}</p></div>
+    <div class="card purple"><h4>${tt('One line to keep','Один рядок із собою')}</h4><p><b>${tt(L.takeaway.en, L.takeaway.uk)}</b><br><span style="font-size:12px;color:var(--ink-3)">${tt('The engine will quote this back next time this barrier shows up.','Движок процитує це наступного разу, коли барʼєр зʼявиться.')}</span></p></div>
+    <button class="btn" onclick="drillStart('${L.tryIv}','${id}')">${tt('Try it now — 2 min','Спробувати зараз — 2 хв')}</button>
+    <button class="btn outline" style="margin-top:8px" onclick="lessonComplete('${id}')">${tt('Keep the line & finish','Зберегти рядок і завершити')}</button>
+  `;
+}
+function lessonComplete(id){
+  DB.lessons[id] = {done: Date.now()};
+  saveDB();
+  toast(tt('Saved to your model — it will be quoted when relevant','Збережено в модель — процитується, коли доречно'));
+  renderRescueHome();
+}
+
+/* --- fire drills: rehearse your reliable move while calm (no session log) --- */
+function drillStart(iv, fromLesson){
+  go('rescue');   // switch first — renderRescueHome() nulls `flow`
+  flow = {text:'', drill:true, fromLesson: fromLesson||null, ts:Date.now(), tried:[iv], escalations:0, barrier:null,
+    u:{layers:[], reflection:'', scale:'moment', scale_note:'', plan:[], viaLLM:false},
+    plan:[{intervention:iv, why:''}], stepIdx:0, payload:{}};
+  ({firstStep, breathing, grounding, brainDump, thoughtCheck, triage, energyMatch, nameFeeling, sortThoughts})[iv]();
+}
+function renderDrillDone(){
+  const iv = flow.plan[0].intervention;
+  DB.drills[iv] = (DB.drills[iv]||0)+1;
+  const fromLesson = flow.fromLesson;
+  if(fromLesson){ DB.lessons[fromLesson] = {done: Date.now()}; }
+  saveDB();
+  const n = DB.drills[iv];
+  $$('#screen-rescue').innerHTML = `
+    <div style="text-align:center;padding-top:26px">
+      <span class="pill accent">${tt('+1 drill','+1 тренування')}</span>
+      <h2 class="big" style="margin-top:14px">${tt('Practised while calm.','Потреновано, поки спокійно.')}</h2>
+      <p class="sub" style="margin-top:6px">${tt(ivName(iv)+' rehearsed '+n+(n===1?' time':' times')+'. Skills drilled cold fire faster when it is hot — that is the whole point.', ivName(iv)+': '+n+' тренув. Навичка, відпрацьована в холодному стані, спрацьовує швидше в гарячому — у цьому вся суть.')}</p>
+    </div>
+    ${fromLesson?`<div class="card purple"><h4>${tt('Lesson line saved','Рядок уроку збережено')}</h4><p><b>${tt(LESSONS[fromLesson].takeaway.en, LESSONS[fromLesson].takeaway.uk)}</b></p></div>`:''}
+    <button class="btn" onclick="renderRescueHome()">${tt('Done','Готово')}</button>
+  `;
+}
+
+/* --- good day is data too: capture protective factors --- */
+const GOOD_FACTORS = [
+  {id:'sleep',    en:'Slept enough',            uk:'Виспався'},
+  {id:'early',    en:'Started the main thing early', uk:'Почав головне зранку'},
+  {id:'moved',    en:'Moved / walked',          uk:'Рухався / гуляв'},
+  {id:'no',       en:'Said no to something',    uk:'Сказав «ні» зайвому'},
+  {id:'food',     en:'Ate properly',            uk:'Нормально поїв'},
+  {id:'people',   en:'Time with people',        uk:'Був з людьми'},
+];
+let __gdPick = {};
+function goodDayStart(){
+  __gdPick = {};
+  go('rescue');
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill accent">${tt('Good day · 60 seconds','Хороший день · 60 секунд')}</span>
+    <h2 class="big" style="margin-top:10px">${tt("Easy today? That's data too.",'Сьогодні легко? Це теж дані.')}</h2>
+    <p class="sub">${tt('The model learns from your bad moments — but your good days hold the other half: what protects you. What was different today?','Модель вчиться на важких моментах — але хороші дні тримають другу половину: що тебе захищає. Що сьогодні було інакше?')}</p>
+    <div class="chips" id="gd-chips">${GOOD_FACTORS.map(f=>`<button class="chip" onclick="gdToggle(this,'${f.id}')">${tt(f.en,f.uk)}</button>`).join('')}</div>
+    <input type="text" id="gd-note" placeholder="${tt('…anything else?','…щось іще?')}" style="margin-top:10px">
+    <div style="height:12px"></div>
+    <button class="btn" onclick="goodDaySave()">${tt('Save the good day','Зберегти хороший день')}</button>
+  `;
+}
+function gdToggle(btn,id){ __gdPick[id]=!__gdPick[id]; btn.classList.toggle('picked',__gdPick[id]); }
+function goodDaySave(){
+  const factors = Object.keys(__gdPick).filter(k=>__gdPick[k]);
+  const note = ($$('#gd-note')||{}).value||'';
+  DB.goodDays.push({ts:Date.now(), dayKey:todayKey(), factors, note:note.trim().slice(0,120)});
+  saveDB();
+  const gi = goodDayInsight();
+  toast(gi || tt('Saved — the model of your good days is forming','Збережено — модель твоїх хороших днів формується'));
+  renderRescueHome();
+}
+function goodDayInsight(){
+  const g = DB.goodDays||[];
+  if(g.length<3) return null;
+  const cnt={}; g.forEach(d=>(d.factors||[]).forEach(f=>cnt[f]=(cnt[f]||0)+1));
+  const top = Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+  if(!top || top[1]<2) return null;
+  const f = GOOD_FACTORS.find(x=>x.id===top[0]);
+  return f ? tt('“'+f.en+'” shows up in '+top[1]+' of your '+g.length+' easy days.','«'+f.uk+'» — у '+top[1]+' з '+g.length+' твоїх легких днів.') : null;
+}
+
+/* --- weekly ritual: what the model learned + one experiment --- */
+function experimentSuggestion(){
+  const rd = riskData();
+  const moves = reliableMoves();
+  if(rd && (rd.part==='afternoon'||rd.part==='evening'))
+    return tt('Touch the hardest thing before 12:00 — your stuck window is the '+rd.part+'.','Торкайся найважчого до 12:00 — твоє вікно застрягання '+dayPartName(rd.part)+'.');
+  if(moves.length && rd && rd.barrier)
+    return tt('At the first sign of “'+barrierName(rd.barrier)+'”, go straight to '+ivName(moves[0].id)+' — no deliberating.','За перших ознак «'+barrierName(rd.barrier)+'» — одразу '+ivName(moves[0].id)+', без роздумів.');
+  return tt('One 2-minute pre-empt before your risk window, daily.','Один 2-хвилинний пре-емпт до вікна ризику, щодня.');
+}
+function weeklyDue(){
+  if(DB.sessions.length<6) return false;
+  return !DB.experiment || DB.experiment.weekKey!==weekKey();
+}
+function openWeekly(){
+  go('rescue');
+  const prev = DB.experiment && DB.experiment.weekKey!==weekKey() && DB.experiment.result==null ? DB.experiment : null;
+  if(prev){
+    $$('#screen-rescue').innerHTML = `
+      <span class="pill purple">${tt('Weekly · 3 min','Тижневик · 3 хв')}</span>
+      <h2 class="big" style="margin-top:12px">${tt("Last week's experiment first.",'Спершу — минулий експеримент.')}</h2>
+      <div class="card amber"><h4>${tt('You committed to','Ти брався за')}</h4><p>“${esc(prev.text)}”</p></div>
+      <p class="sub">${tt('Honestly — did it change anything?','Чесно — це щось змінило?')}</p>
+      <button class="choice" onclick="weeklyPrevResult('worked')">${tt('Yes, noticeably','Так, помітно')}</button>
+      <button class="choice" onclick="weeklyPrevResult('partly')">${tt('Partly','Частково')}</button>
+      <button class="choice" onclick="weeklyPrevResult('no')">${tt('Not really','Не дуже')}</button>
+    `;
+    return;
+  }
+  renderWeeklyMain();
+}
+function weeklyPrevResult(v){
+  if(DB.experiment){ DB.experiment.result=v; saveDB(); }
+  toast(v==='worked'?tt('Kept — that goes into the model','Зафіксовано — це йде в модель'):tt('Noted honestly','Чесно занотовано'));
+  renderWeeklyMain();
+}
+function renderWeeklyMain(){
+  const traj = trajectory();
+  const rd = riskData();
+  const moves = reliableMoves();
+  const sug = experimentSuggestion();
+  window.__sug = sug;
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('Your week in the model','Твій тиждень у моделі')}</span>
+    <h2 class="big" style="margin-top:10px">${tt('3 minutes, once a week.','3 хвилини, раз на тиждень.')}</h2>
+    ${rd&&rd.barrier?`<div class="card"><h4>${tt('Barrier of the week','Барʼєр тижня')}</h4><p><b>${barrierName(rd.barrier)}</b> · ${tt('usually','зазвичай')} ${dayPartName(rd.part)}</p></div>`:''}
+    ${moves.length?`<div class="card accent"><h4>${tt('Move of the week','Хід тижня')}</h4><p><b>${ivName(moves[0].id)}</b> — ${Math.round(moves[0].rate*100)}% (${moves[0].w}/${moves[0].t})</p></div>`:''}
+    ${traj?`<div class="card"><h4>${tt('Trend','Тренд')}</h4><p>${tt('Stuck moments','Застрягань')}: ${traj.map(t=>t.n).join(' → ')} · ${tt('win rate','перемог')}: ${traj.map(t=>t.winRate===null?'—':t.winRate+'%').join(' → ')}</p></div>`:''}
+    <div class="card purple">
+      <h4>${tt('One experiment for next week','Один експеримент на тиждень')}</h4>
+      <p>${esc(sug)}</p>
+    </div>
+    <button class="btn" onclick="weeklyAccept()">${tt('Take the experiment','Беру експеримент')}</button>
+    <button class="btn ghost" onclick="renderRescueHome()">${tt('Skip this week','Пропустити тиждень')}</button>
+  `;
+}
+function weeklyAccept(){
+  DB.experiment = {weekKey: weekKey(), ts: Date.now(), text: window.__sug||experimentSuggestion(), result: null};
+  saveDB();
+  toast(tt('Experiment set — it will sit on Today all week','Експеримент встановлено — він житиме на «Сьогодні» весь тиждень'));
+  go('today');
+}
+
+/* --- evening close: shut the day the morning opened --- */
+let __closePick = null;
+function closeDayPick(v){
+  __closePick = v;
+  const box = $$('#close-box');
+  if(box) box.innerHTML = `
+    <p style="font-size:13px;color:var(--ink-2);margin:0 0 8px">${v==='yes'?tt('What made it work?','Що зіграло?'):v==='partly'?tt('What helped, what got in the way?','Що допомогло, а що завадило?'):tt('No blame — what got in the way?','Без провини — що завадило?')}</p>
+    <input type="text" id="close-note" placeholder="${tt('One honest line…','Один чесний рядок…')}">
+    <div style="height:10px"></div>
+    <button class="btn" onclick="closeDaySave()">${tt('Close the day','Закрити день')}</button>
+  `;
+}
+function closeDaySave(){
+  const ci = todaysCheckin();
+  DB.closes.push({ts:Date.now(), dayKey:todayKey(), touched:__closePick, hardest:(ci&&ci.hardest)||'', note:(($$('#close-note')||{}).value||'').trim().slice(0,140)});
+  saveDB();
+  toast(__closePick==='yes'?tt('Closed. The model logged a win day.','Закрито. Модель занотувала виграний день.'):tt('Closed honestly — that teaches the model most.','Закрито чесно — саме це вчить модель найбільше.'));
+  renderToday();
 }
 
 /* =====================================================================
@@ -2579,6 +2824,17 @@ function renderRescueHome(){
     <div style="height:8px"></div>
     <button class="btn" onclick="startFlow()">${tt('Help me get unstuck','Допоможи вибратись')}</button>
     ${ci && ci.hardest ? `<div class="card amber" style="margin-top:14px"><h4>${tt('From your morning check-in','З ранкового чек-іну')}</h4><p>${tt('You said the hard thing today is','Ти сказав, що найскладніше сьогодні —')} “${esc(ci.hardest)}”. ${tt('If this is about that — the engine already has the context.','Якщо це про це — движок уже має контекст.')}</p></div>`:''}
+    ${(function(){ /* v2.2: OK-mode — invest a calm minute into fewer bad ones */
+      if(window.__demoActive) return '';
+      const mv = reliableMoves()[0];
+      return `<div class="ok-strip">
+        <p>${tt("Feeling OK today? Invest two calm minutes in having fewer bad ones.",'Сьогодні ок? Інвестуй дві спокійні хвилини в менше поганих.')}</p>
+        <div class="row" style="gap:6px">
+          <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="goodDayStart()">☀️ ${tt('Good day = data','Хороший день = дані')}</button>
+          ${mv?`<button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="drillStart('${mv.id}')">🧯 ${tt('Fire drill · 2 min','Навчання · 2 хв')}</button>`:''}
+        </div>
+      </div>`;
+    })()}
     ${todayWins?`<p class="footer-note">${todayWins} ${tt(todayWins>1?'supported moments today':'supported moment today','підтриманих моментів сьогодні')}. ${tt("That's the number that matters.",'Саме це число має значення.')}</p>`:''}
   `;
 }
@@ -2701,6 +2957,11 @@ function renderReflection(){
       <p class="hypothesis" style="margin:4px 0 0;font-size:16.5px">${esc(u.reflection)}</p>
     </div>
     ${(function(){ const e=findEcho(flow.text); return e?`<div class="card purple"><h4>📖 ${tt('Your own words, '+e.days+(e.days===1?' day':' days')+' ago','Твої власні слова, '+e.days+' дн. тому')}</h4><p><i>“${esc(e.phrase)}”</i> — ${tt('sounds like the same thing returning. The engine remembers how that one went.','схоже, те саме повертається. Движок памʼятає, як було минулого разу.')}</p></div>`:''; })()}
+    ${(function(){ /* v2.2: quote the line the user kept from their lesson */
+      const lid = lessonIdFor(flow.barrier);
+      if(!lid || !lessonDone(lid)) return '';
+      return `<div class="card accent"><h4>🎓 ${tt('From your lesson','З твого уроку')}</h4><p><b>${tt(LESSONS[lid].takeaway.en, LESSONS[lid].takeaway.uk)}</b></p></div>`;
+    })()}
     ${u.layers.length ? `<div class="card">
       <h4>${tt('The layers underneath','Шари під цим')}</h4>
       ${u.layers.map(l=>`<div class="layer"><span class="k k-${l.kind}">${l.kind}</span><span>${l.quote?`<i style="color:var(--ink-3)">“${esc(l.quote)}”</i> — `:''}${esc(l.note)}</span></div>`).join('')}
@@ -2735,6 +2996,7 @@ function runStep(){
 }
 function ivDone(){
   stopTimers();
+  if(flow.drill){ renderDrillDone(); return; }   // v2.2: fire drill — practice, not a session
   if(flow.bonusRound){   // v2.1: body-bonus after a clear-but-wound-up check — no second session log
     flow.bonusRound = false;
     renderWinSummary(window.__sessRef, tt('Good — the body got its minute too. Head and body leaving together.','Добре — тіло теж отримало свою хвилину. Голова й тіло йдуть разом.'));
@@ -3313,6 +3575,11 @@ function renderWinSummary(sess, extraLine){
       <h4><span style="color:var(--amber)">✦</span> ${tt('What the engine learned','Що дізнався движок')}</h4>
       <p>${learningLine(sess)}</p>
     </div>
+    ${(function(){ /* v2.2: micro-lesson offered right after a win — understand why it works */
+      if(window.__demoActive) return '';
+      const lid = lessonAvailable(sess.barrier); if(!lid) return '';
+      return `<div class="card purple"><h4>🎓 ${tt('Want to know why this works on you?','Хочеш зрозуміти, чому це на тобі працює?')}</h4><p>${tt(LESSONS[lid].title.en, LESSONS[lid].title.uk)} — ${tt('a 3-minute lesson built from your own data.','3-хвилинний урок, зібраний із твоїх даних.')}</p><button class="btn outline" style="margin-top:8px" onclick="openLesson('${lid}')">${tt('Open the lesson','Відкрити урок')}</button></div>`;
+    })()}
     <button class="btn" onclick="renderRescueHome()">${tt('Done','Готово')}</button>
     <button class="btn ghost" onclick="go('insights')">${tt('See your patterns','Побачити свої патерни')}</button>
   `;
@@ -3471,11 +3738,52 @@ function renderToday(){
       <h4>${tt('Week plan · from your last honest session','План на тиждень · з останньої чесної сесії')}</h4>
       ${wp.items.map((it,i)=>`<label class="wp-item ${it.done?'done':''}"><input type="checkbox" ${it.done?'checked':''} onchange="wpToggle(${i})"><div><div class="d">${esc(it.day_hint)}</div><div class="a">${esc(it.action)}</div></div></label>`).join('')}
     </div>`:'';
+  /* v2.2: weekly ritual + current experiment + evening close (hidden during guided demos) */
+  const demo = !!window.__demoActive;
+  const weeklyHtml = (!demo && weeklyDue()) ? `
+    <div class="card purple">
+      <h4>🗓 ${tt('Weekly · 3 minutes','Тижневик · 3 хвилини')}</h4>
+      <p>${tt('See what the model learned this week — and take one small experiment for the next one.','Поглянь, що модель дізналась за тиждень — і візьми один маленький експеримент на наступний.')}</p>
+      <button class="btn" style="margin-top:8px" onclick="openWeekly()">${tt('Open the weekly','Відкрити тижневик')}</button>
+    </div>`:'';
+  const expHtml = (!demo && DB.experiment && DB.experiment.weekKey===weekKey()) ? `
+    <div class="card accent">
+      <h4>🧪 ${tt('Experiment of the week','Експеримент тижня')}</h4>
+      <p>${esc(DB.experiment.text)}</p>
+      <p style="font-size:11px;color:var(--ink-3);margin:6px 0 0">${tt("Next weekly will honestly ask whether it changed anything.",'Наступний тижневик чесно спитає, чи це щось змінило.')}</p>
+    </div>`:'';
+  const tc = todayClose();
+  const closeHtml = !demo ? (ci && !tc ? `
+    <div class="card" style="border:1px solid rgba(124,92,240,.25)">
+      <h4>🌙 ${tt('Evening close · 30 seconds','Вечірнє закриття · 30 секунд')}</h4>
+      <p>${ci.hardest?tt('You said the hard thing was “'+esc(ci.hardest)+'”. Did you touch it?','Ти казав, найскладніше — «'+esc(ci.hardest)+'». Торкнувся?'):tt('How did the day actually go?','Як насправді минув день?')}</p>
+      <div class="row" style="margin-top:10px;gap:6px">
+        <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="closeDayPick('yes')">${tt('Yes','Так')}</button>
+        <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="closeDayPick('partly')">${tt('Partly','Частково')}</button>
+        <button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="closeDayPick('no')">${tt('No','Ні')}</button>
+      </div>
+      <div id="close-box" style="margin-top:8px"></div>
+    </div>` : (tc ? `
+    <div class="card">
+      <h4>🌙 ${tt('Day closed','День закрито')}</h4>
+      <p>${tc.touched==='yes'?tt('The hard thing got touched — logged as a win day.','Складне зрушено — занотовано як виграний день.'):tc.touched==='partly'?tt('Partly touched — honest counts.','Частково — чесність рахується.'):tt("Didn't happen today — no blame, the model just learned something real.",'Сьогодні не вийшло — без провини, модель просто дізналась щось справжнє.')}${tc.note?` <i style="color:var(--ink-3)">“${esc(tc.note)}”</i>`:''}</p>
+    </div>`:'')) : '';
+  /* v2.2: yesterday's close feeds this morning — return feels like a continued conversation */
+  const yc = yesterdayClose();
+  const ydayHtml = (!demo && yc && yc.hardest) ? `
+    <div class="card ${yc.touched==='no'?'amber':''}" style="margin-bottom:4px">
+      <h4>${tt('Yesterday','Вчора')}</h4>
+      <p>${yc.touched==='yes'
+        ? tt('“'+esc(yc.hardest)+'” moved ✓ — what is the hardest thing today?','«'+esc(yc.hardest)+'» зрушило ✓ — що найважче сьогодні?')
+        : tt('“'+esc(yc.hardest)+'” never happened — is it the hardest thing again today?','«'+esc(yc.hardest)+'» так і не відбулось — воно знову найважче сьогодні?')}</p>
+      ${yc.touched!=='yes'?`<button class="btn outline" style="margin-top:8px;font-size:12.5px" onclick="var e=document.getElementById('ci-hardest'); if(e){e.value='${esc(yc.hardest).replace(/'/g,'’')}'; e.focus();}">${tt('Yes — carry it over','Так — перенести')}</button>`:''}
+    </div>`:'';
   if(!ci){
     scr.innerHTML = `
       <p class="eyebrow">${tt('Liven · Prepare','Liven · Підготовка')}</p>
       <h2 class="big">${tt('60 seconds before the day starts moving.','60 секунд до того, як день зрушить.')}</h2>
       <p class="sub">${tt("Not a habit tracker — a heads-up to yourself about where today might snag.",'Не трекер звичок — попередження самому собі, де сьогодні може зачепити.')}</p>
+      ${ydayHtml}
       <h4 style="margin:14px 0 8px;font-size:14px">${tt("What's the hardest thing on today's plate?",'Що найскладніше сьогодні на тарілці?')}</h4>
       <input type="text" id="ci-hardest" placeholder="${tt("The one you're already avoiding a little…",'Те, що ти вже трохи уникаєш…')}">
       <h4 style="margin:16px 0 8px;font-size:14px">${tt('Energy this morning?','Енергія зранку?')}</h4>
@@ -3489,6 +3797,8 @@ function renderToday(){
       <div style="height:16px"></div>
       <button class="btn" onclick="saveCheckin()">${tt('Set me up','Налаштуй мене')}</button>
       ${risk?`<div class="card amber" style="margin-top:16px"><h4>${tt('Your pattern says','Твій патерн каже')}</h4><p>${risk}</p></div>`:''}
+      ${weeklyHtml}
+      ${expHtml}
       ${deeperHtml}
       ${wpHtml}
     `;
@@ -3499,7 +3809,10 @@ function renderToday(){
       <p class="sub">${tt("The engine is holding today's context — Rescue will use it if you get stuck.",'Движок тримає контекст сьогодні — Порятунок скористається ним, якщо застрягнеш.')}</p>
       ${ci.hardest?`<div class="card"><h4>${tt('The hard thing','Складна річ')}</h4><p>${esc(ci.hardest)}</p></div>`:''}
       ${ci.intent?`<div class="card accent"><h4>${tt('Your intention','Твій намір')}</h4><p>${esc(ci.intent)}</p></div>`:''}
+      ${closeHtml}
       ${risk?`<div class="card amber"><h4>${tt('Watch out for','Стережись')}</h4><p>${risk}</p></div>`:''}
+      ${weeklyHtml}
+      ${expHtml}
       ${deeperHtml}
       ${wpHtml}
       <div class="card">
@@ -3645,6 +3958,20 @@ function renderInsights(){
       ${trajRow(tt('Win rate','Показник перемог'), traj.map(t=>t.winRate), '%', false)}
       <p style="font-size:10.5px;color:var(--ink-3);margin:8px 0 0">${tt('Honest read: fewer stuck moments and fewer moves per win = the model is doing its job. Short windows are noisy — trends over months are the real signal.','Чесне читання: менше застрягань і менше ходів до перемоги = модель робить свою роботу. Короткі вікна шумні — справжній сигнал у трендах за місяці.')}</p>
     </div>`:'';
+  /* v2.2: the other half of the model — what protects you on easy days */
+  const gd = DB.goodDays||[];
+  let goodHtml = '';
+  if(gd.length>=3){
+    const cnt={}; gd.forEach(d=>(d.factors||[]).forEach(f=>cnt[f]=(cnt[f]||0)+1));
+    const rows = Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id,n])=>{
+      const f=GOOD_FACTORS.find(x=>x.id===id); return f?`<div class="model-row"><span>${tt(f.en,f.uk)}</span><b style="color:var(--accent)">${n}/${gd.length}</b></div>`:'';
+    }).join('');
+    goodHtml = `<div class="card accent">
+      <h4>☀️ ${tt('Your easy days — what protects you','Твої легкі дні — що тебе захищає')}</h4>
+      <p style="font-size:12px;margin-bottom:10px">${tt('Captured on days you said were easy. The model of you includes what works — not only what breaks.','Зібрано в дні, які ти назвав легкими. Модель тебе включає те, що працює, — не лише те, що ламається.')}</p>
+      ${rows}
+    </div>`;
+  }
 
   scr.innerHTML = `
     <p class="eyebrow">${tt('Liven · Insights','Liven · Інсайти')}</p>
@@ -3660,6 +3987,7 @@ function renderInsights(){
       </div>
     </div>
     ${trajHtml}
+    ${goodHtml}
 
     ${topB?`<div class="card accent">
       <h4>${tt('What the engine knows about you','Що движок знає про тебе')}</h4>
@@ -3732,6 +4060,11 @@ function renderYou(){
           <p style="font-size:12px;margin-bottom:10px">${tt('Across everything — ranked by how often they actually helped you.','Загалом — за тим, як часто вони реально тобі допомагали.')}</p>
           ${moves.slice(0,5).map(m=>`<div class="model-row"><span>${ivName(m.id)}</span><b style="color:var(--accent)">${Math.round(m.rate*100)}% · ${m.w}/${m.t}</b></div>`).join('')}
         </div>`:''}
+        ${(function(){ /* v2.2: lines kept from your lessons */
+          const done = Object.keys(DB.lessons||{}).filter(id=>lessonDone(id));
+          if(!done.length) return '';
+          return `<div class="card purple"><h4>🎓 ${tt('Lines you kept','Рядки, які ти лишив собі')}</h4>${done.map(id=>`<div class="model-row"><span style="font-size:12.5px;color:var(--ink-3)">${tt(LESSONS[id].title.en, LESSONS[id].title.uk)}</span><b style="font-size:12.5px">${tt(LESSONS[id].takeaway.en, LESSONS[id].takeaway.uk)}</b></div>`).join('')}</div>`;
+        })()}
         <div class="card">
           <h4>${tt('Totals','Підсумки')}</h4>
           <div class="model-row"><span>${tt('Sessions logged','Записано сесій')}</span><b>${all.length}</b></div>
@@ -3739,6 +4072,9 @@ function renderYou(){
           <div class="model-row"><span>${tt('Overall help rate','Загальний показник допомоги')}</span><b>${Math.round(all.filter(isWin).length/all.length*100)}%</b></div>
           <div class="model-row"><span>${tt('Confirmed hours later','Підтверджено згодом')}</span><b>${all.filter(s=>s.followup==='held').length}</b></div>
           <div class="model-row"><span>${tt('Pre-empted before the window','Попереджено до вікна')}</span><b>${all.filter(s=>s.preempt&&isWin(s)).length}</b></div>
+          <div class="model-row"><span>${tt('Skills drilled while calm','Тренувань у спокої')}</span><b>${Object.values(DB.drills||{}).reduce((a,b)=>a+b,0)}</b></div>
+          <div class="model-row"><span>${tt('Days honestly closed','Чесно закритих днів')}</span><b>${(DB.closes||[]).length}</b></div>
+          <div class="model-row"><span>${tt('Good days captured','Зафіксовано легких днів')}</span><b>${(DB.goodDays||[]).length}</b></div>
           <div class="model-row"><span>${tt('Sessions via LLM','Сесій через LLM')}</span><b>${all.filter(s=>s.viaLLM).length}</b></div>
         </div>`}
     <div class="card purple">
@@ -3909,6 +4245,17 @@ function seedDemo(){
   DB.sessions = DB.sessions.concat(S);
   DB.pending = {sid:S[S.length-1].id, ts: now-3*36e5, iv:S[S.length-1].intervention, barrier:S[S.length-1].barrier, label:'Q3 planning doc'};
   if(!todaysCheckin()) DB.checkins.push({ts:now-2*36e5, hardest:'Q3 planning doc', energy:2, intent:'touch the doc before 15:00'});
+  /* v2.2: daily loop, good days, lessons, drills, last week's experiment */
+  if(!yesterdayClose()) DB.closes.push({ts:now-DAY+4*36e5, dayKey:todayKey(now-DAY), touched:'no', hardest:'Q3 planning doc', note: LANG==='uk'?'мітинги зʼїли день':'meetings ate the day'});
+  if((DB.goodDays||[]).length===0){
+    DB.goodDays.push({ts:now-9*DAY, dayKey:todayKey(now-9*DAY), factors:['early','sleep'], note:''});
+    DB.goodDays.push({ts:now-6*DAY, dayKey:todayKey(now-6*DAY), factors:['early','moved'], note:''});
+    DB.goodDays.push({ts:now-4*DAY, dayKey:todayKey(now-4*DAY), factors:['early','no'], note:''});
+    DB.goodDays.push({ts:now-2*DAY, dayKey:todayKey(now-2*DAY), factors:['sleep','people'], note:''});
+  }
+  DB.lessons = Object.assign({}, DB.lessons, {fear:{done: now-5*DAY}});
+  DB.drills = Object.assign({}, DB.drills, {breathing:2});
+  if(!DB.experiment) DB.experiment = {weekKey: weekKey(now-8*DAY), ts: now-8*DAY, text: LANG==='uk'?'Торкатися найважчого до 12:00':'Touch the hardest thing before 12:00', result: null};
   saveDB();
   toast(tt('Sample history loaded','Демо-історію завантажено'));
   go('insights');
