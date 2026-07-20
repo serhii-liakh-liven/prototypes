@@ -79,6 +79,18 @@
   .ok-strip{margin-top:14px;padding:13px 14px;border:1.5px dashed var(--line);border-radius:15px}
   .ok-strip p{font-size:12.5px;color:var(--ink-3);margin:0 0 9px;line-height:1.45}
   .privacy-line{font-size:11px;color:var(--ink-3);margin:6px 2px 10px;line-height:1.4}
+  /* v2.4: intensity scale + night mode */
+  .iscale{display:flex;gap:4px;margin:8px 0 2px}
+  .iscale button{flex:1;min-width:0;padding:9px 0;border-radius:9px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--ink-2);cursor:pointer}
+  .iscale button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .iscale-label{font-size:12px;color:var(--ink-3);margin:10px 2px 0}
+  .app-scroll.night{background:linear-gradient(160deg,#232A36 0%,#2A2F42 60%,#33304A 100%)}
+  .app-scroll.night .big,.app-scroll.night h2{color:#EDEFF4}
+  .app-scroll.night .sub,.app-scroll.night p{color:#B8BECC}
+  .app-scroll.night textarea{background:#2E3546;color:#EDEFF4;box-shadow:inset 0 0 0 1px #3A4256}
+  .night-card{background:linear-gradient(140deg,#2A2F42,#3A3357);border-radius:16px;padding:14px 16px;margin-top:14px}
+  .night-card h4{color:#D9DCFF;margin:0 0 4px}
+  .night-card p{color:#AeB3C9;font-size:12.5px;line-height:1.5;margin:0 0 10px}
   .deeper-card h4{margin:0 0 5px}
   .deeper-card .why{font-size:13px;color:var(--ink-2);line-height:1.5;margin:0 0 11px}
   /* voice dictation on the entry screen */
@@ -1249,6 +1261,8 @@
       <div class="demo-card"><span class="dn" data-i18n="dc.3n">Scenario 3 · ~2 min</span><h4 data-i18n="dc.3h">Nothing helps — the honest version</h4><p data-i18n="dc.3p">Rich input, but no exercise lands. The app refuses to fake success: honest escalation, a week plan saved to Today, and a human-support suggestion.</p><button class="dp" onclick="startDemo('nothing')" data-i18n="dc.run">▶ Run scenario</button></div>
       <div class="demo-card"><span class="dn" data-i18n="dc.4n">Scenario 4 · ~2 min</span><h4 data-i18n="dc.4h">Returning user — context kicks in</h4><p data-i18n="dc.4p">Three weeks of history load first. Watch the morning check-in feed Rescue, the risk-window warning appear, and the learning line say “your reliable move”.</p><button class="dp" onclick="startDemo('returning')" data-i18n="dc.run">▶ Run scenario</button></div>
       <div class="demo-card"><span class="dn" data-i18n="dc.5n">Scenario 5 · ~30 sec</span><h4 data-i18n="dc.5h">Crisis override (safety)</h4><p data-i18n="dc.5p">A safety classifier watches every input. Crisis signals bypass all exercises — a gentle screen, a human line first. Non-negotiable for a wellness product.</p><button class="dp" onclick="startDemo('crisis')" data-i18n="dc.run">▶ Run scenario</button></div>
+      <div class="demo-card"><span class="dn" data-i18n="dc.6n">Scenario 6 · ~2 min · v2</span><h4 data-i18n="dc.6h">Day zero — value before words</h4><p data-i18n="dc.6p">A brand-new user who refuses to type: body first, one word, an honest check — then the first-session receipt, a next-24h move, and “make tomorrow smarter”. Day-zero value, proven.</p><button class="dp" onclick="startDemo('dayzero')" data-i18n="dc.run">▶ Run scenario</button></div>
+      <div class="demo-card"><span class="dn" data-i18n="dc.7n">Scenario 7 · ~2 min · v2</span><h4 data-i18n="dc.7h">Week 3 — the model leads</h4><p data-i18n="dc.7p">Three weeks of history: the delayed “did it hold?”, the risk-window pre-empt, your own words echoed, your lesson quoted, and a plan that shows “worked 3/3 for you”. The moat, felt.</p><button class="dp" onclick="startDemo('week3')" data-i18n="dc.run">▶ Run scenario</button></div>
     </div>
     <div class="fairnote reveal" style="margin-top:18px" data-i18n-html="dc.honesty"><b>Honesty note:</b> guided demos run on the deterministic built-in engine so every step is predictable. The hints tell you what the LLM engine would add at each moment — and for the real thing, see the block right below.</div>
   </section>
@@ -1512,6 +1526,12 @@ const DICT = {
   'dc.5n':{en:'Scenario 5 · ~30 sec', uk:'Сценарій 5 · ~30 с'},
   'dc.5h':{en:'Crisis override (safety)', uk:'Кризовий перехват (безпека)'},
   'dc.5p':{en:'A safety classifier watches every input. Crisis signals bypass all exercises — a gentle screen, a human line first. Non-negotiable for a wellness product.', uk:'Класифікатор безпеки стежить за кожним вводом. Кризові сигнали обходять усі вправи — мʼякий екран, спершу людська лінія. Не обговорюється для wellness-продукту.'},
+  'dc.6n':{en:'Scenario 6 · ~2 min · v2', uk:'Сценарій 6 · ~2 хв · v2'},
+  'dc.6h':{en:'Day zero — value before words', uk:'Нульовий день — цінність до слів'},
+  'dc.6p':{en:'A brand-new user who refuses to type: body first, one word, an honest check — then the first-session receipt, a next-24h move, and “make tomorrow smarter”. Day-zero value, proven.', uk:'Новий користувач, який відмовляється писати: спершу тіло, одне слово, чесна перевірка — далі квитанція першої сесії, хід на 24 години і «зроби завтра розумнішим». Цінність нульового дня — доведена.'},
+  'dc.7n':{en:'Scenario 7 · ~2 min · v2', uk:'Сценарій 7 · ~2 хв · v2'},
+  'dc.7h':{en:'Week 3 — the model leads', uk:'Тиждень 3 — модель веде'},
+  'dc.7p':{en:'Three weeks of history: the delayed “did it hold?”, the risk-window pre-empt, your own words echoed, your lesson quoted, and a plan that shows “worked 3/3 for you”. The moat, felt.', uk:'Три тижні історії: відкладене «втрималось?», пре-емпт вікна ризику, ехо твоїх власних слів, цитата твого уроку і план, що показує «допомагало тобі 3/3». Рів — відчутний.'},
   'dc.honesty':{en:'<b>Honesty note:</b> guided demos run on the deterministic built-in engine so every step is predictable. The hints tell you what the LLM engine would add at each moment — and for the real thing, see the block right below.', uk:'<b>Примітка про чесність:</b> керовані демо працюють на детермінованому вбудованому движку, тож кожен крок передбачуваний. Підказки кажуть, що LLM-движок додав би в кожен момент — а щодо справжнього, дивись блок одразу нижче.'},
 
   'cta.kicker':{en:'The real thing · 2 minutes to set up', uk:'Справжнє · 2 хвилини на налаштування'},
@@ -2522,6 +2542,180 @@ function openModelPreview(){
   `;
 }
 
+/* ===== v2.4: intensity, night mode, re-entry, tone, human bridge, personas ===== */
+function demoHideExtras(){ return window.__demoActive && !window.__demoShowV2; }
+
+/* --- A1: intensity 1–10, before and after — the honest delta --- */
+function iscaleHtml(id, sel){
+  return `<div class="iscale" id="${id}">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="${sel===n?'on':''}" onclick="iscalePick('${id}',${n})">${n}</button>`).join('')}</div>`;
+}
+let __i0=null;
+function iscalePick(id, n){
+  if(id==='i0'){ __i0=n; }
+  if(id==='i1'){ window.__i1=n; }
+  const box=document.getElementById(id); if(!box) return;
+  [].forEach.call(box.querySelectorAll('button'), (b,i)=>b.classList.toggle('on', i+1===n));
+}
+function renderIntensityAfter(clearer){
+  window.__i1=null; window.__pendingClearer=clearer;
+  $$('#screen-rescue').innerHTML = `
+    <span class="pill accent">${tt('Last honest number','Останнє чесне число')}</span>
+    <h2 class="big" style="margin-top:12px">${tt('And now — how loud is it?','А зараз — наскільки гучно?')}</h2>
+    <p class="sub">${tt('You came in at '+flow.intensity0+'/10. The delta is the most honest measure this product has.','Ти зайшов на '+flow.intensity0+'/10. Дельта — найчесніша міра, яку має цей продукт.')}</p>
+    ${iscaleHtml('i1', null)}
+    <div style="height:14px"></div>
+    <button class="btn" onclick="flow.intensity1=window.__i1; finishSessionReal(window.__pendingClearer)">${tt('Save','Зберегти')}</button>
+    <button class="btn ghost" onclick="finishSessionReal(window.__pendingClearer)">${tt('Skip','Пропустити')}</button>
+  `;
+}
+
+/* --- A3: night mode — put the thoughts down, they will wait for morning --- */
+function isNightNow(){ const h=new Date().getHours(); return h>=21 || h<5; }
+function nightStart(){
+  go('rescue');
+  document.querySelector('.app-scroll').classList.add('night');
+  flow=null;
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="nightExit()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('Night mode','Нічний режим')}</span>
+    <h2 class="big" style="margin-top:10px">${tt("Can't sleep — thoughts circling?",'Не спиться — думки крутяться?')}</h2>
+    <p class="sub">${tt("At night the job is not to act — it is to put things down. Write what circles; it will be waiting for you in the morning, safe.",'Вночі задача — не діяти, а відкласти. Запиши, що крутиться; воно дочекається тебе вранці, нікуди не дінеться.')}</p>
+    <textarea id="night-text" rows="5" placeholder="${tt('Everything circling goes here…','Усе, що крутиться, — сюди…')}"></textarea>
+    <div style="height:10px"></div>
+    <button class="btn" onclick="nightSave()">${tt('Put it down for the night','Відкласти до ранку')}</button>
+  `;
+}
+function nightSave(){
+  const t=($$('#night-text')||{}).value||'';
+  if(t.trim()) { DB.nightNotes=(DB.nightNotes||[]); DB.nightNotes.push({ts:Date.now(), dayKey:todayKey(Date.now()+9*36e5), text:t.trim().slice(0,300)}); saveDB(); }
+  $$('#screen-rescue').innerHTML = `
+    <span class="pill purple">${tt('Put down','Відкладено')}</span>
+    <h2 class="big" style="margin-top:12px">${tt('They will wait. You can stop holding them.','Вони дочекаються. Можеш більше не тримати.')}</h2>
+    <p class="sub">${tt('Sixty seconds of longer exhales — then let the night do its job. No first steps at 1 a.m.; that is by design.','Шістдесят секунд довших видихів — і хай ніч робить своє. Жодних «перших кроків» о першій ночі; так задумано.')}</p>
+    <button class="btn" onclick="flow={text:'',night:true,drill:true,ts:Date.now(),tried:['breathing'],escalations:0,barrier:null,u:{layers:[],scale:'moment',viaLLM:false},plan:[{intervention:'breathing'}],stepIdx:0,payload:{}}; breathing()">${tt('One quiet minute','Одна тиха хвилина')}</button>
+    <button class="btn ghost" onclick="nightExit()">${tt('Good night','Добраніч')}</button>
+  `;
+}
+function nightExit(){ const s=document.querySelector('.app-scroll'); if(s) s.classList.remove('night'); renderRescueHome(); }
+
+/* --- B5: tone calibration — how should I talk to you --- */
+function toneDue(){ return earlySessions()>=3 && !DB.settings.tone && !DB.settings.toneAsked; }
+function setTone(v){ DB.settings.tone=v; DB.settings.toneAsked=true; saveDB(); toast(tt('Noted — I will sound like that','Занотовано — так і звучатиму')); renderRescueHome(); }
+function toneHint(){ return DB.settings.tone==='soft' ? 'Tone: extra warm, gentle, unhurried.' : DB.settings.tone==='direct' ? 'Tone: warm but direct and concise — no cushioning.' : ''; }
+
+/* --- C6: say it to a human — a drafted message, user sends it themselves --- */
+function humanBridgeRelevant(sess){
+  if(['fear','boundaries'].includes(sess.barrier)) return true;
+  return /хейт|осуд|самотн|ніхто|люди|resent|judge|alone|nobody|people/i.test(sess.text||'');
+}
+function openHumanBridge(){
+  const sess=window.__sessRef||{};
+  const q=(sess.text||'').slice(0,60);
+  const draft = tt("Hey. I'm having a hard time with something right now"+(q?' — '+q:'')+". I don't need advice — could you just be around for a bit?",
+                   'Привіт. Мені зараз непросто'+(q?' — '+q:'')+'. Не треба порад — можеш просто побути поруч трохи?');
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderWinSummary(window.__sessRef)">‹ ${tt('Back','Назад')}</button>
+    <span class="pill accent">${tt('Say it to a person','Скажи це людині')}</span>
+    <h2 class="big" style="margin-top:10px">${tt('An app is a bridge, not the destination.','Застосунок — міст, а не пункт призначення.')}</h2>
+    <p class="sub">${tt('A draft to a friend or partner — edit it, then send it yourself, from your own messenger. Nothing leaves this app.','Чернетка другові чи партнеру — відредагуй і надішли сам, зі свого месенджера. Із застосунку нічого не надсилається.')}</p>
+    <textarea id="hb-text" rows="5">${esc(draft)}</textarea>
+    <div style="height:10px"></div>
+    <button class="btn" onclick="try{navigator.clipboard.writeText(document.getElementById('hb-text').value); toast(tt('Copied — paste it in your messenger','Скопійовано — встав у месенджер'));}catch(e){toast(tt('Select & copy manually','Виділи й скопіюй вручну'));}">${tt('Copy the message','Скопіювати повідомлення')}</button>
+    <p class="footer-note">${tt('Asking to be around is a move, not a weakness.','Попросити побути поруч — це хід, а не слабкість.')}</p>
+  `;
+}
+
+/* --- C7: therapist pack — bring your model to a professional --- */
+function therapistPackText(){
+  const rows=[];
+  const bStats={}; DB.sessions.forEach(s=>{ if(!s.barrier)return; bStats[s.barrier]=(bStats[s.barrier]||0)+1; });
+  const bs=Object.entries(bStats).sort((a,b)=>b[1]-a[1]).map(([b,n])=>barrierName(b)+' ×'+n).join(', ');
+  const rd=riskData();
+  const moves=reliableMoves().slice(0,3).map(m=>ivName(m.id)+' ('+Math.round(m.rate*100)+'%, '+m.w+'/'+m.t+')').join(', ');
+  const takeaways=Object.keys(DB.lessons||{}).filter(id=>lessonDone(id)).map(id=>tt(LESSONS[id].takeaway.en,LESSONS[id].takeaway.uk)).join('; ');
+  const patterns=DB.sessions.filter(s=>s.scale==='pattern').length;
+  rows.push(tt('SELF-OBSERVATION SUMMARY (generated by Liven · Get Unstuck, data collected by the user about themselves)','ЗВЕДЕННЯ САМОСПОСТЕРЕЖЕНЬ (згенеровано Liven · Get Unstuck, дані зібрані користувачем про себе)'));
+  rows.push('');
+  rows.push(tt('Logged sessions: ','Записаних сесій: ')+DB.sessions.length+tt(' over ~','' )+ (DB.sessions.length? Math.max(1,Math.round((Date.now()-Math.min.apply(null,DB.sessions.map(s=>s.ts)))/DAY))+tt(' days',' днів'):''));
+  if(bs) rows.push(tt('Recurring barriers: ','Повторювані барʼєри: ')+bs);
+  if(rd&&!rd.prior) rows.push(tt('Typical difficult window: ','Типове складне вікно: ')+dayPartName(rd.part));
+  if(moves) rows.push(tt('What reliably helps (self-reported): ','Що надійно допомагає (за самозвітом): ')+moves);
+  if(patterns) rows.push(tt('Sessions self-flagged as a recurring pattern (not a moment): ','Сесій, чесно позначених як патерн (не момент): ')+patterns);
+  if(takeaways) rows.push(tt('Lines the user kept from micro-lessons: ','Висновки, які користувач лишив собі: ')+takeaways);
+  rows.push('');
+  rows.push(tt('Note: self-help data, not a diagnosis. Brought to support a first conversation.','Примітка: дані самодопомоги, не діагноз. Принесено, щоб підтримати першу розмову.'));
+  return rows.join('\n');
+}
+function openTherapistPack(){
+  const txt=therapistPackText();
+  showModal(`
+    <h3>${tt('Pack for a professional','Пакет для фахівця')}</h3>
+    <p>${tt('Your model, summarized — bring it to a first session with a therapist. Copy it or save as a file; nothing is sent anywhere.','Твоя модель, стисло — принеси на першу сесію з терапевтом. Скопіюй або збережи файлом; нікуди нічого не надсилається.')}</p>
+    <textarea id="tp-text" rows="9" style="width:100%;font-size:12px">${esc(txt)}</textarea>
+    <button class="pbtn" onclick="try{navigator.clipboard.writeText(document.getElementById('tp-text').value); toast(tt('Copied','Скопійовано'));}catch(e){}">${tt('Copy','Скопіювати')}</button>
+    <button class="pbtn" style="background:var(--surface-3);color:var(--ink);margin-top:8px" onclick="dlText('liven-self-observation.txt', document.getElementById('tp-text').value)">${tt('Save as .txt','Зберегти .txt')}</button>
+  `);
+}
+function dlText(name, text){
+  try{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/plain'})); a.download=name; document.body.appendChild(a); a.click(); a.remove(); }catch(e){ toast(tt('Download blocked here — use Copy','Завантаження тут заблоковано — скористайся «Скопіювати»')); }
+}
+
+/* --- A4: gentle re-entry after a pause — nothing burned down --- */
+function reentryDue(){
+  if(!DB.sessions.length) return false;
+  const last=Math.max.apply(null, DB.sessions.map(s=>s.ts));
+  return (Date.now()-last>7*DAY) && DB.settings.reentryDay!==todayKey();
+}
+function reentryDismiss(){ DB.settings.reentryDay=todayKey(); saveDB(); renderRescueHome(); }
+
+/* --- D9: persona switcher — jump between lifecycle states --- */
+function personaWipe(){
+  DB.sessions=[]; DB.checkins=[]; DB.closes=[]; DB.goodDays=[]; DB.nightNotes=[];
+  DB.lessons={}; DB.drills={}; DB.weekPlan=null; DB.experiment=null; DB.pending=null; DB.prior=null;
+  DB.settings.toneAsked=false; DB.settings.tone=null; DB.settings.reentryDay=null;
+  saveDB();
+}
+function personaNew(){ personaWipe(); toast(tt('Fresh user — day zero','Новий користувач — нульовий день')); go('rescue'); renderRescueHome(); }
+function personaWeek3(){ personaWipe(); seedDemo(); toast(tt('Week 3 loaded','Тиждень 3 завантажено')); go('rescue'); renderRescueHome(); }
+function personaMonth2(){
+  personaWipe(); seedDemo();
+  const now=Date.now();
+  const mk=(d,h,b,iv,hp,cl)=>({id:'m'+Math.random().toString(36).slice(2,8), ts:now-d*DAY+(h-new Date(now).getHours())*36e5, barrier:b, intervention:iv, tried:[iv], helped:hp, clearer:!!cl, scale:'moment', daypart:h<5?'night':h<12?'morning':h<17?'afternoon':'evening'});
+  DB.sessions = [
+    mk(48,15,'uncertainty','firstStep','none',false), mk(46,16,'rumination','brainDump','bit',false),
+    mk(43,15,'uncertainty','firstStep','bit',true),  mk(40,11,'overload','triage','bit',true),
+    mk(37,15,'fear','thoughtCheck','bit',true),      mk(34,21,'tension','breathing','much',false),
+    mk(31,15,'uncertainty','firstStep','much',true), mk(28,10,'rumination','sortThoughts','much',true),
+    mk(25,15,'uncertainty','firstStep','much',true), mk(23,16,'depletion','energyMatch','bit',true),
+  ].concat(DB.sessions);
+  DB.lessons={rumination:{done:now-30*DAY}, uncertainty:{done:now-20*DAY}, fear:{done:now-5*DAY}, tension:{done:now-12*DAY}};
+  DB.drills={breathing:6, firstStep:3};
+  DB.sessions.filter(isWin).slice(0,8).forEach((s,i)=>{ if(i%2===0) s.followup='held'; });
+  DB.goodDays.push({ts:now-15*DAY, dayKey:todayKey(now-15*DAY), factors:['early','sleep'], note:''});
+  DB.goodDays.push({ts:now-20*DAY, dayKey:todayKey(now-20*DAY), factors:['early','moved'], note:''});
+  DB.experiment={weekKey:weekKey(), ts:now-2*DAY, text:LANG==='uk'?'За перших ознак «невизначеності» — одразу перший крок':'At the first sign of uncertainty — straight to first step', result:null};
+  DB.settings.tone='direct'; DB.settings.toneAsked=true;
+  saveDB();
+  toast(tt('Month 2 loaded — a mature model','Місяць 2 завантажено — зріла модель'));
+  go('rescue'); renderRescueHome();
+}
+
+/* --- E10: export + full erase --- */
+function exportData(){
+  try{
+    const data=JSON.stringify(DB, null, 1);
+    dlText('liven-my-data.json', data);
+  }catch(e){ toast(tt('Export failed here','Експорт тут не вдався')); }
+}
+function eraseEverything(){
+  showModal(`
+    <h3>${tt('Erase everything?','Стерти все?')}</h3>
+    <p>${tt('All sessions, the whole model, lessons, settings — gone from this browser for good. This cannot be undone.','Усі сесії, вся модель, уроки, налаштування — назавжди зникнуть із цього браузера. Це не можна скасувати.')}</p>
+    <button class="pbtn" style="background:var(--bad)" onclick="try{localStorage.removeItem(KEY);}catch(e){}; DB=loadDB(); closeModal(); toast(tt('Erased. Clean slate.','Стерто. Чистий аркуш.')); go('rescue'); renderRescueHome();">${tt('Erase it all','Стерти все')}</button>
+    <button class="pbtn" style="background:var(--surface-3);color:var(--ink);margin-top:8px" onclick="closeModal()">${tt('Keep my data','Лишити мої дані')}</button>
+  `);
+}
+
 /* =====================================================================
    INTERVENTION LIBRARY
 ===================================================================== */
@@ -2638,13 +2832,16 @@ Follow the product method exactly:
 Intervention library:
 ${IV_LIB_TEXT}
 
-Language: write reflection, notes, whys, scale_note, and thoughts in the USER'S OWN language (Ukrainian text → Ukrainian output). Be specific to what they wrote; generic output is a product failure.`;
+Language: write reflection, notes, whys, scale_note, and thoughts in the USER'S OWN language (Ukrainian text → Ukrainian output). Be specific to what they wrote; generic output is a product failure.
+
+followup_question: if — and ONLY if — the input is genuinely too ambiguous to mirror confidently (you cannot tell which thread carries the weight), set followup_question to ONE short, warm question about the most loaded thread, in the user's language. Otherwise set it to an empty string. Never ask more than one; if the input already contains a line starting with "[clarify]", it was answered — always return an empty string then. A wrong mirror costs trust; one good question is cheaper.`;
 
 const SCHEMA_UNDERSTAND = {
   type:'object', additionalProperties:false,
-  required:['reflection','layers','thoughts','scale','scale_note','plan','crisis'],
+  required:['reflection','layers','thoughts','scale','scale_note','plan','crisis','followup_question'],
   properties:{
     reflection:{type:'string'},
+    followup_question:{type:'string'},
     layers:{type:'array', items:{type:'object', additionalProperties:false, required:['kind','quote','note'], properties:{
       kind:{type:'string', enum:['task','belief','rumination','body','energy','other']},
       quote:{type:'string'}, note:{type:'string'},
@@ -2706,14 +2903,38 @@ function buildContext(){
 
 async function engineUnderstand(text){
   if(llmReady()){
-    const out = await llmCall(SYS_UNDERSTAND, {user_text:text, context:buildContext()}, SCHEMA_UNDERSTAND, 2000);
+    const sys = SYS_UNDERSTAND + (toneHint() ? '\n\n'+toneHint() : '');   // v2.4: user-calibrated voice
+    const out = await llmCall(sys, {user_text:text, context:buildContext()}, SCHEMA_UNDERSTAND, 2000);
     out.viaLLM = true; return out;
   }
   return understandHeuristic(text);
 }
+/* v2.4: LLM asks ONE warm follow-up when the input is too ambiguous to mirror */
+function renderLLMFollowup(q){
+  window.__fuQ = q;
+  $$('#screen-rescue').innerHTML = `
+    <button class="back" onclick="renderRescueHome()">‹ ${tt('Back','Назад')}</button>
+    <span class="pill purple">${tt('One question first','Спершу одне питання')}</span>
+    <h2 class="big" style="margin-top:10px">${esc(q)}</h2>
+    <p class="sub">${tt("I'd rather ask than guess — one answer and I'll mirror this properly.",'Краще спитаю, ніж вгадуватиму — одна відповідь, і віддзеркалю як слід.')}</p>
+    <textarea id="fu-answer" rows="3" placeholder="${tt('In your own words…','Своїми словами…')}"></textarea>
+    <div style="height:10px"></div>
+    <button class="btn" onclick="fuAnswer()">${tt('Answer','Відповісти')}</button>
+    <button class="btn ghost" onclick="flow.fuAsked=true; renderReflection()">${tt('Skip — mirror as is','Пропустити — дзеркаль як є')}</button>
+  `;
+}
+async function fuAnswer(){
+  const a=($$('#fu-answer')||{}).value||'';
+  flow.fuAsked = true;
+  if(!a.trim()){ renderReflection(); return; }
+  flow.text = flow.text + '\n[clarify] ' + (window.__fuQ||'') + ' → ' + a.trim();
+  thinkingScreen(tt('Re-reading with your answer…','Перечитую з твоєю відповіддю…'));
+  try{ flow.u = await engineUnderstand(flow.text); }catch(e){ renderReflection(); return; }
+  afterUnderstand();
+}
 async function engineEscalate(sessionInfo){
   if(llmReady()){
-    const out = await llmCall(SYS_ESCALATE, sessionInfo, SCHEMA_ESCALATE, 1400);
+    const out = await llmCall(SYS_ESCALATE + (toneHint() ? "\n\n"+toneHint() : ""), sessionInfo, SCHEMA_ESCALATE, 1400);
     out.viaLLM = true; return out;
   }
   return escalateHeuristic(sessionInfo);
@@ -2888,8 +3109,16 @@ function renderRescueHome(){
   const ci = todaysCheckin();
   const todayWins = DB.sessions.filter(s=>todayKey(s.ts)===todayKey() && isWin(s)).length;
   const S = getStarters();
+  __i0 = null;   // v2.4: reset the intensity pick for a fresh entry
+  /* v2.4: gentle re-entry after a pause */
+  const reHtml = (!demoHideExtras() && reentryDue()) ? `
+    <div class="card purple" style="margin-bottom:14px">
+      <h4>🌿 ${tt('Nothing burned down','Нічого не згоріло')}</h4>
+      <p>${tt("It's been a while — and that's fine. No streaks died, the model kept everything it learned about you. Pick up right where you are.",'Минув якийсь час — і це нормально. Жодних згорілих стріків: модель зберегла все, що знала про тебе. Продовжуй просто звідти, де ти є.')}</p>
+      <button class="btn outline" style="margin-top:8px;font-size:12.5px" onclick="reentryDismiss()">${tt('Good to know','Добре знати')}</button>
+    </div>`:'';
   /* v2.1: delayed follow-up + pre-emptive risk-window nudge (hidden during guided demos) */
-  const fu = !window.__demoActive ? pendingFollowupReady() : null;
+  const fu = !demoHideExtras() ? pendingFollowupReady() : null;
   const fuHtml = fu ? `
     <div class="card purple" style="margin-bottom:14px">
       <h4>⏳ ${tt('Earlier today','Раніше сьогодні')}</h4>
@@ -2901,7 +3130,7 @@ function renderRescueHome(){
       </div>
       <p style="font-size:10.5px;color:var(--ink-3);margin:8px 0 0">${tt('Prototype note: appears ~40s after a win; in production — hours later, via push.','Нотатка прототипу: зʼявляється ~40 с після перемоги; у проді — за години, через пуш.')}</p>
     </div>`:'';
-  const rd = !window.__demoActive ? riskData() : null;
+  const rd = !demoHideExtras() ? riskData() : null;
   const barrierWonToday = rd && DB.sessions.some(s=>todayKey(s.ts)===todayKey() && s.barrier===rd.barrier && isWin(s));
   const inWindow = rd && daypart(Date.now())===rd.part;
   const preHtml = (rd && rd.barrier && !barrierWonToday) ? `
@@ -2916,7 +3145,7 @@ function renderRescueHome(){
     </div>`:'';
   scr.innerHTML = `
     ${llmBadge()}
-    ${fuHtml}${preHtml}
+    ${reHtml}${fuHtml}${preHtml}
     <h2 class="big">${tt("What's going on right now?",'Що зараз відбувається?')}</h2>
     <p class="sub">${tt("Say it like it is, in your own words — any language. Type or tap the mic to talk. Messy is fine; that's the point.",'Скажи, як є, своїми словами — будь-якою мовою. Пиши або тапни мікрофон, щоб говорити. Хаотично — це нормально, у цьому й суть.')}</p>
     <div class="ta-wrap">
@@ -2925,15 +3154,18 @@ function renderRescueHome(){
     </div>
     <div class="mic-hint" id="mic-hint"></div>
     <p class="privacy-line">🔒 ${tt('Your words stay on this device.','Твої слова лишаються на цьому пристрої.')}</p>
+    <p class="iscale-label">${tt('How loud is it right now? (optional — we measure the drop)','Наскільки гучно зараз? (необовʼязково — ми міряємо спад)')}</p>
+    ${iscaleHtml('i0', null)}
+    <div style="height:6px"></div>
     <div class="chips">
       ${S.map(([l,p],i)=>`<button class="chip" onclick="starter(${i})">${l}</button>`).join('')}
     </div>
     <div style="height:8px"></div>
     <button class="btn" onclick="startFlow()">${tt('Help me get unstuck','Допоможи вибратись')}</button>
-    ${!window.__demoActive?`<button class="btn ghost" style="margin-top:8px" onclick="noWordsStart()">${tt("I don't want to write",'Не хочу писати')}</button>`:''}
+    ${!demoHideExtras()?`<button class="btn ghost" style="margin-top:8px" onclick="noWordsStart()">${tt("I don't want to write",'Не хочу писати')}</button>`:''}
     ${ci && ci.hardest ? `<div class="card amber" style="margin-top:14px"><h4>${tt('From your morning check-in','З ранкового чек-іну')}</h4><p>${tt('You said the hard thing today is','Ти сказав, що найскладніше сьогодні —')} “${esc(ci.hardest)}”. ${tt('If this is about that — the engine already has the context.','Якщо це про це — движок уже має контекст.')}</p></div>`:''}
     ${(function(){ /* v2.2: OK-mode — invest a calm minute into fewer bad ones */
-      if(window.__demoActive) return '';
+      if(demoHideExtras()) return '';
       const mv = reliableMoves()[0];
       return `<div class="ok-strip">
         <p>${tt("Feeling OK today? Invest two calm minutes in having fewer bad ones.",'Сьогодні ок? Інвестуй дві спокійні хвилини в менше поганих.')}</p>
@@ -2943,6 +3175,12 @@ function renderRescueHome(){
         </div>
       </div>`;
     })()}
+    ${(!demoHideExtras() && isNightNow())?`
+    <div class="night-card">
+      <h4>🌙 ${tt("Late and can't sleep?",'Пізно і не спиться?')}</h4>
+      <p>${tt('A different mode for night: put the thoughts down, one quiet minute for the body — no first steps at 1 a.m.','Інший режим для ночі: відкласти думки, одна тиха хвилина тілу — жодних «перших кроків» о першій ночі.')}</p>
+      <button class="btn" style="background:#6D5BD0" onclick="nightStart()">${tt('Night mode','Нічний режим')}</button>
+    </div>`:''}
     ${todayWins?`<p class="footer-note">${todayWins} ${tt(todayWins>1?'supported moments today':'supported moment today','підтриманих моментів сьогодні')}. ${tt("That's the number that matters.",'Саме це число має значення.')}</p>`:''}
   `;
 }
@@ -3007,7 +3245,7 @@ async function startFlow(){
   if(typeof stopVoice==='function') stopVoice();
   const text = $$('#rh-text').value.trim();
   if(text.length < 8){ toast(tt('Say a bit more — even one sentence','Скажи трохи більше — хоч одне речення')); return; }
-  flow = {text, ts: Date.now(), tried: [], escalations: 0};
+  flow = {text, ts: Date.now(), tried: [], escalations: 0, intensity0: __i0};
   thinkingScreen(llmReady() ? tt('Reading what you wrote…','Читаю, що ти написав…') : tt('Reading what you wrote (demo logic)…','Читаю, що ти написав (демо-логіка)…'));
   try{
     flow.u = await engineUnderstand(text);
@@ -3024,7 +3262,13 @@ function afterUnderstand(){
   flow.plan = u.plan.length ? u.plan.slice(0,3) : [{intervention:'brainDump', why:''}];
   const pz = personalizePlan(flow.plan, flow.barrier);   // v2: lead with what works for YOU
   flow.plan = pz.plan; flow.personalized = pz.personalized;
+  /* v2.4: at 8+/10 the body goes first — no thinking tools while the alarm is on */
+  if(flow.intensity0>=8 && !['breathing','grounding'].includes(flow.plan[0].intervention)){
+    flow.plan = [{intervention:'breathing', why: tt('You rated this '+flow.intensity0+'/10 — at that volume the body goes first, thinking after.','Ти оцінив це на '+flow.intensity0+'/10 — на такій гучності спершу тіло, думати потім.')}].concat(flow.plan).slice(0,3);
+  }
   flow.stepIdx = 0;
+  /* v2.4: LLM's own follow-up question comes first (max one per session) */
+  if(u.viaLLM && u.followup_question && u.followup_question.trim() && !flow.fuAsked && !window.__demoActive){ renderLLMFollowup(u.followup_question.trim()); return; }
   /* v2.1: unsure? ask ONE question instead of guessing (skipped inside guided demos) */
   if(!window.__demoActive && !flow.edited && needsClarify(u)){ renderClarifyQ(); return; }
   renderReflection();
@@ -3065,7 +3309,7 @@ function renderReflection(){
       <p class="hypothesis" style="margin:4px 0 0;font-size:16.5px">${esc(u.reflection)}</p>
     </div>
     ${(function(){ /* v2.3: day-0 meta-card — name what just happened, once */
-      if(!isEarlyUser() || window.__demoActive || flow.nowords || u.layers.length<2) return '';
+      if(!isEarlyUser() || demoHideExtras() || flow.nowords || u.layers.length<2) return '';
       const nSent = (flow.text||'').split(/[.!?\n]+/).filter(s=>s.trim().length>3).length;
       return `<div class="card purple"><h4>✨ ${tt('What just happened','Що щойно сталося')}</h4><p>${tt('You wrote '+nSent+' sentence'+(nSent===1?'':'s')+' — I heard <b>'+u.layers.length+' different layers</b> in them. Most apps would have matched the word “anxious” to one generic exercise. Understanding first is the whole product.','Ти написав '+nSent+' '+(nSent===1?'речення':'речення')+' — я почув у них <b>'+u.layers.length+' різні шари</b>. Більшість застосунків підібрали б до слова «тривога» одну генеричну вправу. Спершу зрозуміти — у цьому весь продукт.')}</p></div>`;
     })()}
@@ -3645,6 +3889,7 @@ function saveSession(){
     intervention: flow.tried[flow.tried.length-1]||null, tried: flow.tried.slice(),
     helped: flow.helped, clearer: !!flow.clearer,
     preempt: !!flow.preempt,
+    i0: flow.intensity0!=null?flow.intensity0:null, i1: flow.intensity1!=null?flow.intensity1:null,
     daypart: daypart(Date.now()), viaLLM: !!(flow.u&&flow.u.viaLLM),
   };
   DB.sessions.push(sess);
@@ -3667,6 +3912,11 @@ function learningLine(sess){
   return tt(`Noted: ${nm} didn't land for ${bn} this time. That's data too — the next recommendation just changed.`,`Занотовано: цього разу ${nm} не спрацював для «${bn}». Це теж дані — наступна рекомендація щойно змінилась.`);
 }
 function finishSession(clearer){
+  /* v2.4: if they rated intensity going in, ask for the after-number — the delta is the product's honest measure */
+  if(flow.intensity0!=null && flow.intensity1===undefined && !flow.nowords){ renderIntensityAfter(clearer); return; }
+  finishSessionReal(clearer);
+}
+function finishSessionReal(clearer){
   flow.clearer = clearer;
   const sess = saveSession();
   const success = isWin(sess);
@@ -3678,6 +3928,7 @@ function finishSession(clearer){
   renderWinSummary(sess);
 }
 function renderWinSummary(sess, extraLine){
+  window.__sessRef = sess;
   const weekWins = DB.sessions.filter(s=>Date.now()-s.ts<7*DAY && isWin(s)).length;
   $$('#screen-rescue').innerHTML = `
     <div style="text-align:center;padding-top:26px">
@@ -3685,9 +3936,10 @@ function renderWinSummary(sess, extraLine){
       <h2 class="big" style="margin-top:14px">${tt("That's the whole product.",'Це і є весь продукт.')}</h2>
       <p class="sub" style="margin-top:6px">${tt("You came in stuck, you're leaving with movement.",'Ти прийшов застряглим, ідеш із рухом.')} ${weekWins} ${tt(weekWins===1?'supported moment this week':'supported moments this week','підтриманих моментів цього тижня')}.</p>
     </div>
+    ${sess.i0!=null&&sess.i1!=null?`<div class="card ${sess.i1<sess.i0?'accent':''}"><h4>📉 ${tt('Volume','Гучність')}</h4><p><b style="font-size:17px">${sess.i0} → ${sess.i1}</b>${sess.i1<sess.i0?` <b style="color:var(--accent)">(−${sess.i0-sess.i1})</b> — ${tt('that drop is the most honest number this product produces.','цей спад — найчесніше число, яке видає цей продукт.')}`:` — ${tt("didn't drop — honestly logged; the engine adapts.",'не впало — чесно занотовано; движок адаптується.')}`}</p></div>`:''}
     ${extraLine?`<div class="card accent"><p>${extraLine}</p></div>`:''}
     ${(function(){ /* v2.3: day-0 receipt — proof of the first session, in one card */
-      if(earlySessions()>2 || window.__demoActive) return '';
+      if(earlySessions()>2 || demoHideExtras()) return '';
       const came = sess.text ? '“'+esc(String(sess.text).slice(0,70))+(sess.text.length>70?'…':'')+'”' : tt('no words — started with the body','без слів — почали з тіла');
       const found = (flow.u&&flow.u.layers&&flow.u.layers.length) ? flow.u.layers.map(l=>l.kind).join(' + ') : barrierName(sess.barrier);
       const did = (sess.tried||[]).map(ivName).join(' → ');
@@ -3709,7 +3961,7 @@ function renderWinSummary(sess, extraLine){
       <p>${learningLine(sess)}</p>
     </div>
     ${(function(){ /* v2.3: next-24h hook + plant tomorrow + show the future */
-      if(earlySessions()>2 || window.__demoActive) return '';
+      if(earlySessions()>2 || demoHideExtras()) return '';
       const iv = sess.intervention || 'breathing';
       return `<div class="card accent">
         <h4>⏭ ${tt('The next 24 hours','Наступні 24 години')}</h4>
@@ -3721,10 +3973,12 @@ function renderWinSummary(sess, extraLine){
       </div>`;
     })()}
     ${(function(){ /* v2.2: micro-lesson offered right after a win — understand why it works */
-      if(window.__demoActive) return '';
+      if(demoHideExtras()) return '';
       const lid = lessonAvailable(sess.barrier); if(!lid) return '';
       return `<div class="card purple"><h4>🎓 ${tt('Want to know why this works on you?','Хочеш зрозуміти, чому це на тобі працює?')}</h4><p>${tt(LESSONS[lid].title.en, LESSONS[lid].title.uk)} — ${tt('a 3-minute lesson built from your own data.','3-хвилинний урок, зібраний із твоїх даних.')}</p><button class="btn outline" style="margin-top:8px" onclick="openLesson('${lid}')">${tt('Open the lesson','Відкрити урок')}</button></div>`;
     })()}
+    ${(!demoHideExtras() && humanBridgeRelevant(sess))?`<button class="btn outline" style="margin-bottom:8px" onclick="openHumanBridge()">💬 ${tt('Say it to a person — draft a message','Скажи це людині — чернетка повідомлення')}</button>`:''}
+    ${(!demoHideExtras() && toneDue())?`<div class="card"><h4>${tt('Quick one: how should I talk to you?','Швидке: як зі мною говорити?')}</h4><div class="row" style="gap:6px;margin-top:8px"><button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="setTone('soft')">${tt('Softer','Мʼякше')}</button><button class="btn outline" style="font-size:12.5px;padding:10px 6px" onclick="setTone('direct')">${tt('More direct','Пряміше')}</button></div></div>`:''}
     <button class="btn" onclick="renderRescueHome()">${tt('Done','Готово')}</button>
     <button class="btn ghost" onclick="go('insights')">${tt('See your patterns','Побачити свої патерни')}</button>
   `;
@@ -3884,7 +4138,7 @@ function renderToday(){
       ${wp.items.map((it,i)=>`<label class="wp-item ${it.done?'done':''}"><input type="checkbox" ${it.done?'checked':''} onchange="wpToggle(${i})"><div><div class="d">${esc(it.day_hint)}</div><div class="a">${esc(it.action)}</div></div></label>`).join('')}
     </div>`:'';
   /* v2.2: weekly ritual + current experiment + evening close (hidden during guided demos) */
-  const demo = !!window.__demoActive;
+  const demo = demoHideExtras();
   const weeklyHtml = (!demo && weeklyDue()) ? `
     <div class="card purple">
       <h4>🗓 ${tt('Weekly · 3 minutes','Тижневик · 3 хвилини')}</h4>
@@ -3913,6 +4167,14 @@ function renderToday(){
       <h4>🌙 ${tt('Day closed','День закрито')}</h4>
       <p>${tc.touched==='yes'?tt('The hard thing got touched — logged as a win day.','Складне зрушено — занотовано як виграний день.'):tc.touched==='partly'?tt('Partly touched — honest counts.','Частково — чесність рахується.'):tt("Didn't happen today — no blame, the model just learned something real.",'Сьогодні не вийшло — без провини, модель просто дізналась щось справжнє.')}${tc.note?` <i style="color:var(--ink-3)">“${esc(tc.note)}”</i>`:''}</p>
     </div>`:'')) : '';
+  /* v2.4: thoughts put down at night wait here in the morning */
+  const nn = (DB.nightNotes||[]).filter(n=>n.dayKey===todayKey());
+  const nightHtml = (!demo && nn.length) ? `
+    <div class="card" style="border:1px solid rgba(124,92,240,.25)">
+      <h4>🌙 ${tt('From the night — as promised, it waited','З ночі — як і обіцяно, дочекалось')}</h4>
+      ${nn.map(n=>`<p style="margin:0 0 6px"><i>“${esc(n.text)}”</i></p>`).join('')}
+      <p style="font-size:11.5px;color:var(--ink-3);margin:6px 0 0">${tt('Daylight version: is any of this the hard thing today — or can it be let go?','Денна версія: чи щось із цього — найважче сьогодні, чи можна відпустити?')}</p>
+    </div>`:'';
   /* v2.2: yesterday's close feeds this morning — return feels like a continued conversation */
   const yc = yesterdayClose();
   const ydayHtml = (!demo && yc && yc.hardest) ? `
@@ -3928,6 +4190,7 @@ function renderToday(){
       <p class="eyebrow">${tt('Liven · Prepare','Liven · Підготовка')}</p>
       <h2 class="big">${tt('60 seconds before the day starts moving.','60 секунд до того, як день зрушить.')}</h2>
       <p class="sub">${tt("Not a habit tracker — a heads-up to yourself about where today might snag.",'Не трекер звичок — попередження самому собі, де сьогодні може зачепити.')}</p>
+      ${nightHtml}
       ${ydayHtml}
       <h4 style="margin:14px 0 8px;font-size:14px">${tt("What's the hardest thing on today's plate?",'Що найскладніше сьогодні на тарілці?')}</h4>
       <input type="text" id="ci-hardest" placeholder="${tt("The one you're already avoiding a little…",'Те, що ти вже трохи уникаєш…')}">
@@ -3954,6 +4217,7 @@ function renderToday(){
       <p class="sub">${tt("The engine is holding today's context — Rescue will use it if you get stuck.",'Движок тримає контекст сьогодні — Порятунок скористається ним, якщо застрягнеш.')}</p>
       ${ci.hardest?`<div class="card"><h4>${tt('The hard thing','Складна річ')}</h4><p>${esc(ci.hardest)}</p></div>`:''}
       ${ci.intent?`<div class="card accent"><h4>${tt('Your intention','Твій намір')}</h4><p>${esc(ci.intent)}</p></div>`:''}
+      ${nightHtml}
       ${closeHtml}
       ${risk?`<div class="card amber"><h4>${tt('Watch out for','Стережись')}</h4><p>${risk}</p></div>`:''}
       ${weeklyHtml}
@@ -4104,6 +4368,14 @@ function renderInsights(){
       ${trajRow(tt('Win rate','Показник перемог'), traj.map(t=>t.winRate), '%', false)}
       <p style="font-size:10.5px;color:var(--ink-3);margin:8px 0 0">${tt('Honest read: fewer stuck moments and fewer moves per win = the model is doing its job. Short windows are noisy — trends over months are the real signal.','Чесне читання: менше застрягань і менше ходів до перемоги = модель робить свою роботу. Короткі вікна шумні — справжній сигнал у трендах за місяці.')}</p>
     </div>`:'';
+  /* v2.4: the honest delta — average intensity drop per session */
+  const iSess = all.filter(s=>s.i0!=null && s.i1!=null);
+  const iHtml = iSess.length>=2 ? (function(){
+    const avg0 = iSess.reduce((a,s)=>a+s.i0,0)/iSess.length;
+    const avg1 = iSess.reduce((a,s)=>a+s.i1,0)/iSess.length;
+    const d = Math.round((avg0-avg1)*10)/10;
+    return `<div class="card accent"><h4>📉 ${tt('The honest delta','Чесна дельта')}</h4><p>${tt('Across '+iSess.length+' rated sessions: average volume '+ (Math.round(avg0*10)/10) +' → '+ (Math.round(avg1*10)/10) +' — <b>−'+d+' per session</b>. Not a promise; a measurement.','За '+iSess.length+' оціненими сесіями: середня гучність '+ (Math.round(avg0*10)/10) +' → '+ (Math.round(avg1*10)/10) +' — <b>−'+d+' за сесію</b>. Не обіцянка — вимір.')}</p></div>`;
+  })() : '';
   /* v2.2: the other half of the model — what protects you on easy days */
   const gd = DB.goodDays||[];
   let goodHtml = '';
@@ -4133,6 +4405,7 @@ function renderInsights(){
       </div>
     </div>
     ${trajHtml}
+    ${iHtml}
     ${goodHtml}
 
     ${topB?`<div class="card accent">
@@ -4256,8 +4529,21 @@ function renderYou(){
       <p style="font-size:11.5px;color:var(--ink-3);margin-top:10px">${tt('Use a low-limit key. A session costs a few cents.','Використовуй ключ з низьким лімітом. Сесія коштує кілька центів.')}</p>
     </div>`}
 
-    <h4 class="settings-label">${tt('Prototype controls','Керування прототипом')}</h4>
-    <button class="btn outline" onclick="seedDemo()">${tt('Load 3 weeks of sample history','Завантажити 3 тижні демо-історії')}</button>
+    <h4 class="settings-label">${tt('Your data, your control','Твої дані — твій контроль')}</h4>
+    <button class="btn outline" onclick="openTherapistPack()">📋 ${tt('Pack for a professional','Пакет для фахівця')}</button>
+    <div style="height:8px"></div>
+    <div class="row" style="gap:8px">
+      <button class="btn outline" style="font-size:12.5px" onclick="exportData()">⬇ ${tt('Export (JSON)','Експорт (JSON)')}</button>
+      <button class="btn outline" style="font-size:12.5px;color:var(--bad)" onclick="eraseEverything()">${tt('Erase everything','Стерти все')}</button>
+    </div>
+    ${DB.settings.tone?`<p style="font-size:12px;color:var(--ink-3);margin:10px 2px 0">${tt('Tone: ','Тон: ')}<b>${DB.settings.tone==='soft'?tt('softer','мʼякше'):tt('more direct','пряміше')}</b> · <button class="mem-forget" style="font-size:12px" onclick="DB.settings.tone=null;DB.settings.toneAsked=false;saveDB();renderYou()">${tt('change','змінити')}</button></p>`:''}
+
+    <h4 class="settings-label">${tt('Prototype controls · personas','Керування прототипом · персони')}</h4>
+    <div class="row" style="gap:6px">
+      <button class="btn outline" style="font-size:12px;padding:11px 4px" onclick="personaNew()">${tt('New user','Новий')}</button>
+      <button class="btn outline" style="font-size:12px;padding:11px 4px" onclick="personaWeek3()">${tt('Week 3','Тиждень 3')}</button>
+      <button class="btn outline" style="font-size:12px;padding:11px 4px" onclick="personaMonth2()">${tt('Month 2','Місяць 2')}</button>
+    </div>
     <div style="height:8px"></div>
     <button class="btn outline" style="color:var(--bad)" onclick="clearAll()">${tt('Clear sessions & plans','Очистити сесії та плани')}</button>
     <button class="btn ghost" onclick="showIntroAgain()">${tt('Replay intro','Повторити інтро')}</button>
@@ -4458,6 +4744,14 @@ const BTN = {
   "Week plan":"План на тиждень","In Ukraine":"В Україні",
   // act substrings (against input text)
   "keep up":"встигаю","emails":"листи","judge":"осудять",
+  // v2.4 demo targets
+  "I don't want to write":"Не хочу писати","Start · 1 min":"Почати · 1 хв",
+  "Thoughts in circles":"Думки по колу","Make tomorrow smarter":"Зроби завтра розумнішим",
+  "Afternoons":"Вдень","Tasks that won't start":"Задачі, що не йдуть",
+  "Yes, it held":"Так, тримається","Earlier today":"Раніше сьогодні",
+  "Your risk window":"Твоє вікно ризику","Your first-session receipt":"Квитанція першої сесії",
+  "Your own words":"Твої власні слова","From your lesson":"З твого уроку",
+  "worked for you":"допомагало","The next 24 hours":"Наступні 24 години",
 };
 function resolveFind(s){ return (LANG==='uk' && BTN[s]) ? BTN[s] : s; }
 
@@ -4532,6 +4826,32 @@ const DEMOS = [
    {t:'tap', find:'Help me get unstuck', hint:'Watch: the classifier overrides every flow.', hu:'Дивись: класифікатор перекриває будь-який флоу.'},
    {t:'note', find:'In Ukraine', hint:'No exercises, no plans, no retention tricks. A gentle screen and a real human line (Lifeline Ukraine 7333). In prod: localized per country + human escalation.', hu:'Жодних вправ, планів, трюків утримання. Мʼякий екран і реальна людська лінія (Lifeline Ukraine 7333). У проді: локалізовано по країні + ескалація до людини.'},
    {t:'tap', find:'Back', hint:'That is the whole scenario — short by design.', hu:'Це весь сценарій — короткий за задумом.'},
+ ]},
+ {id:'dayzero', v2:true, title:'S6 · Day zero (v2)', tu:'S6 · Нульовий день (v2)', outro:'A brand-new user, zero typing: body first, one word, an honest check — and they leave with a receipt, a next-24h move, and a personalized tomorrow. Day-zero value, proven not promised.', ou:'Новий користувач, нуль набору: спершу тіло, одне слово, чесна перевірка — і він іде з квитанцією, ходом на 24 години та персональним завтра. Цінність нульового дня — доведена, не обіцяна.', steps:[
+   {t:'auto', fn:function(){ DB.sessions=[];DB.checkins=[];DB.closes=[];DB.goodDays=[];DB.nightNotes=[];DB.lessons={};DB.drills={};DB.weekPlan=null;DB.experiment=null;DB.pending=null;DB.prior=null; renderRescueHome(); }, hint:'Fresh install: empty model, day zero. Note the privacy line under the field — trust before typing.', hu:'Свіже встановлення: порожня модель, нульовий день. Зверни увагу на рядок приватності під полем — довіра до набору.'},
+   {t:'tap', find:"I don't want to write", hint:'The riskiest day-0 user: too overwhelmed to type. There is an explicit path for them.', hu:'Найризиковіший користувач D0: надто накритий, щоб писати. Для нього є явний шлях.'},
+   {t:'tap', find:'Start · 1 min', hint:'No naming, no explaining — the body goes first. Value before any words.', hu:'Нічого не називати й не пояснювати — спершу тіло. Цінність до будь-яких слів.'},
+   {t:'tap', find:'I feel settled — continue', hint:'Breathing runs at demo speed — the settle button unlocks after 3 rounds.', hu:'Дихання на демо-швидкості — кнопка «спокій» відкриється після 3 кіл.'},
+   {t:'tap', find:'Thoughts in circles', hint:'One tap gives the model its first data point — still zero words typed.', hu:'Один тап дає моделі першу точку — досі нуль набраних слів.'},
+   {t:'tap', find:'A bit', hint:'The honest check works even for a wordless session.', hu:'Чесна перевірка працює навіть для сесії без слів.'},
+   {t:'tap', find:'Yes — I know my next move', hint:'Clarity counts. Watch the day-zero finale now.', hu:'Ясність рахується. Тепер дивись фінал нульового дня.'},
+   {t:'note', find:'Your first-session receipt', hint:'The receipt: came in → turned out → did → result. Proof of value, not a promise. Below it — the next-24h move.', hu:'Квитанція: прийшов → виявилось → зробив → результат. Доказ цінності, не обіцянка. Нижче — хід на наступні 24 години.'},
+   {t:'tap', find:'Make tomorrow smarter', hint:'Thirty seconds that make tomorrow personal — the model gets priors before any history exists.', hu:'Тридцять секунд, що роблять завтра персональним — модель отримує пріори ще до історії.'},
+   {t:'tap', find:'Afternoons', hint:'When does it usually hit?', hu:'Коли зазвичай накриває?'},
+   {t:'tap', find:"Tasks that won't start", hint:'What eats you most often?', hu:'Що найчастіше зʼїдає?'},
+   {t:'tap', find:'Done', hint:'Saved. Now look at the home screen.', hu:'Збережено. Тепер глянь на головний екран.'},
+   {t:'note', find:'Your risk window', hint:'Day zero, zero sessions of history — and the home screen is already personal: a pre-empt built from the user\'s own words, honestly labeled.', hu:'Нульовий день, нуль сесій історії — а головний екран уже персональний: пре-емпт із власних слів користувача, чесно підписаний.'},
+ ]},
+ {id:'week3', v2:true, title:'S7 · Week 3 (v2)', tu:'S7 · Тиждень 3 (v2)', outro:'Three weeks in, the model leads: it checks whether help held, warns about your window, echoes your own words, quotes your lesson, and shows its work — “worked 3/3 for you”. This is the moat, felt.', ou:'Три тижні — і модель веде: перевіряє, чи втрималась допомога, попереджає про твоє вікно, відлунює твої власні слова, цитує твій урок і показує свою роботу — «допомагало тобі 3/3». Це і є рів — відчутний.', steps:[
+   {t:'auto', fn:function(){ DB.sessions=[];DB.checkins=[];DB.closes=[];DB.goodDays=[];DB.nightNotes=[];DB.lessons={};DB.drills={};DB.weekPlan=null;DB.experiment=null;DB.pending=null;DB.prior=null; seedDemo(); DB.lessons.rumination={done:Date.now()-5*DAY}; go('rescue'); }, hint:'Three weeks of history load. First thing on screen: the app follows up on the LAST win.', hu:'Завантажуються три тижні історії. Перше на екрані: застосунок повертається до МИНУЛОЇ перемоги.'},
+   {t:'note', find:'Earlier today', hint:'The delayed “did it hold?” — supported moments become verified outcomes, not in-session optimism.', hu:'Відкладене «втрималось?» — підтримані моменти стають перевіреними результатами, а не в-сесійним оптимізмом.'},
+   {t:'tap', find:'Yes, it held', hint:'Confirmed hours later — that counts double in the model.', hu:'Підтверджено через години — у моделі це рахується подвійно.'},
+   {t:'note', find:'Your risk window', hint:'The model predicts now: your window, your usual barrier, a 2-minute pre-empt — before it builds, not after.', hu:'Модель тепер передбачає: твоє вікно, твій типовий барʼєр, 2-хвилинний пре-емпт — до того, як наросте, а не після.'},
+   {t:'fill', sel:'#rh-text', append:true, value:'Знову не встигаю нічого, думки по колу — не можу розслабитись', vu:'Знову не встигаю нічого, думки по колу — не можу розслабитись', hint:'A stuck moment in the user\'s own words — any language, as always.', hu:'Момент застрягання власними словами — будь-якою мовою, як завжди.'},
+   {t:'tap', find:'Help me get unstuck', hint:'Send it — and watch what three weeks of model add to the same flow.', hu:'Надішли — і дивись, що три тижні моделі додають тому самому флоу.'},
+   {t:'note', find:'Your own words', hint:'The echo: “your own words, days ago” — the user feels REMEMBERED. A competitor starts from zero.', hu:'Ехо: «твої власні слова, N днів тому» — користувач відчуває, що його ПАМʼЯТАЮТЬ. Конкурент починає з нуля.'},
+   {t:'note', find:'From your lesson', hint:'The line they kept from a micro-lesson, quoted exactly when relevant — lessons as mechanism, not catalog.', hu:'Рядок, який вони лишили з мікроуроку, процитований саме коли доречно — уроки як механізм, не каталог.'},
+   {t:'note', find:'worked for you', hint:'And the plan shows its work: “worked for you 3/3 times here”. Recommendations that earn trust. That is v2.', hu:'І план показує свою роботу: «допомагало тобі 3/3 разів тут». Рекомендації, що заслуговують довіру. Це і є v2.'},
  ]},
 ];
 
@@ -4680,7 +5000,7 @@ function demoTick(){
 function startDemo(id){
   exitDemo();
   const sc=DEMOS.find(d=>d.id===id); if(!sc) return;
-  window.__demoActive=true; demoSc=sc; demoIdx=0; demoOnce={}; demoAct={}; lastBarHtml='';
+  window.__demoActive=true; window.__demoShowV2=!!sc.v2; demoSc=sc; demoIdx=0; demoOnce={}; demoAct={}; lastBarHtml='';
   closeIntro(); stopTimers(); flow=null; go('rescue');
   const phone=document.querySelector('.phone');
   const bar=document.createElement('div'); bar.className='demo-bar'; bar.id='demo-bar';
@@ -4693,7 +5013,7 @@ function startDemo(id){
 }
 function demoKick(){ setTimeout(demoTick, 80); setTimeout(demoTick, 400); setTimeout(demoTick, 900); }
 function exitDemo(){
-  window.__demoActive=false;
+  window.__demoActive=false; window.__demoShowV2=false;
   const ph=document.querySelector('.phone'); if(ph) ph.removeEventListener('click', demoKick, true);
   if(demoTimer){ clearInterval(demoTimer); demoTimer=null; }
   demoSc=null; demoIdx=0; demoOnce={}; demoAct={}; lastBarHtml='';
